@@ -1,0 +1,6 @@
+interface:
+  display_name: "Image Prompt Gen"
+  short_description: "Compile or reverse image prompts for Krea, Qwen, or Anima"
+  default_prompt: "Use $image-prompt-gen to turn this scene idea into a generation-ready prompt."
+policy:
+  allow_implicit_invocation: true

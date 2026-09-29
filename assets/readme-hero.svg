@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320" role="img" aria-labelledby="title description">
+  <title id="title">Image Prompt Gen</title>
+  <desc id="description">Ideas and images into ready-to-paste prompts. A picture card with a sun and hills sits in front of a prompt card with lines of text, marked by a small spark.</desc>
+  <defs>
+    <clipPath id="frame"><rect width="1200" height="320" rx="24"/></clipPath>
+    <radialGradient id="dot-fade" gradientUnits="userSpaceOnUse" cx="1200" cy="0" r="420">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/>
+      <stop offset="0.55" stop-color="#FFFFFF" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="11" cy="11" r="1.6" fill="#F3A5BC"/>
+    </pattern>
+    <mask id="dot-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1200" height="320" style="mask-type:alpha">
+      <rect width="1200" height="320" fill="url(#dot-fade)"/>
+    </mask>
+  </defs>
+  <g clip-path="url(#frame)">
+    <rect width="1200" height="320" fill="#131117"/>
+    <rect width="1200" height="320" fill="url(#dots)" mask="url(#dot-mask)" opacity="0.28" aria-hidden="true"/>
+
+    <!-- Mark: a prompt card behind a picture card, with a spark where they meet -->
+    <g transform="translate(92 70)" aria-hidden="true">
+      <rect x="70" y="0" width="128" height="156" rx="16" fill="#26212C" stroke="#3A3342" stroke-width="2"/>
+      <g stroke="#8D8198" stroke-width="7" stroke-linecap="round">
+        <path d="M150 34H178"/>
+        <path d="M150 58H178"/>
+        <path d="M150 82H170"/>
+      </g>
+      <rect x="0" y="40" width="144" height="152" rx="16" fill="#F5EFF3"/>
+      <circle cx="96" cy="84" r="15" fill="#F3A5BC"/>
+      <path d="M18 170L58 118L86 150L104 132L128 170Z" fill="#2A2430"/>
+      <path d="M198 186l7 -17l17 -7l-17 -7l-7 -17l-7 17l-17 7l17 7Z" fill="#F3A5BC"/>
+    </g>
+
+    <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+      <text x="342" y="174" fill="#F5F1F4" font-size="80" font-weight="700" letter-spacing="-2" textLength="679" lengthAdjust="spacing">Image <tspan fill="#F3A5BC">Prompt</tspan> Gen</text>
+      <text x="346" y="222" fill="#A79DB0" font-size="18" font-weight="600" textLength="674" lengthAdjust="spacing">IDEAS AND IMAGES INTO READY-TO-PASTE PROMPTS</text>
+    </g>
+  </g>
+  <rect x="0.5" y="0.5" width="1199" height="319" rx="24" fill="none" stroke="#2A2530"/>
+</svg>

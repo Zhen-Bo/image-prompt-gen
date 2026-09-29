@@ -1,0 +1,299 @@
+# Image Prompt Gen（繁體中文對照版）
+
+> [!NOTE]
+> 這是 [`SKILL.md`](../SKILL.md) 的繁體中文對照版，僅供閱讀。Agent 實際載入的是根目錄的英文版，兩者內容不一致時以英文版為準。
+
+把使用者的視覺意圖，變成可以直接貼進本地 Krea 2、Qwen Image 2.1 或 Anima 工作流程的提示詞。
+
+這個 Skill 的運作像編譯器。推理在內部完成，使用者拿到的是完成的提示詞：
+
+`使用者意圖或圖片 → SceneSpec → 構圖 → 色情強度 → 模型轉接器 → 壓縮 → 最終提示詞`
+
+構圖會在決定模型用詞之前處理好，所以換模型或換 E 等級時，改變的是場景的表達方式，而不是場景本身。
+
+## 目錄
+
+1. 語言
+2. 編譯前：確定目標模型
+3. SceneSpec：唯一的內部場景狀態
+4. 核心規則
+5. 編譯提示詞
+6. 參考檔路由
+7. 輸出格式
+8. 範例
+9. 最終檢查
+
+## 1. 語言
+
+- **圖像提示詞一律是英文。** 所有目標模型用英文條件化的效果最好，而且使用者會直接貼進生成器。
+- **提示詞以外的內容跟隨使用者的語言**：提問、版本標籤，以及使用者要求的任何說明。使用者用中文時，標籤和提問用中文，提示詞維持英文。
+
+## 2. 編譯前：確定目標模型
+
+支援的目標是 **Krea 2 precise**、**Qwen Image 2.1 raw/no-PE** 與 **Anima**。每個模型需要的資訊密度不同（見第 6 節），所以動筆前必須先知道目標。
+
+1. 使用者指定了 Krea 2、Qwen Image 2.1 或 Anima → 使用該模型。
+2. 使用者指定了這三個以外的模型，例如 GPT Image、Midjourney 或 Flux → 這個 Skill 不適用。用一句話說明，然後不使用此 Skill 處理請求。
+3. 對話中先前已確定模型 → 沿用。
+4. 沒有指定也沒有確定模型 → 撰寫任何提示詞前，先問使用者要編譯成哪個模型。問題要簡短、用使用者的語言，並與其他會卡住的問題（例如 E 等級不明確）合併，讓使用者一次回答完。
+
+使用者需要多個模型時，把同一份 SceneSpec 分別經過各個轉接器編譯，並標上模型名稱。
+
+## 3. SceneSpec：唯一的內部場景狀態
+
+每個請求都會化約成一份 SceneSpec。所有處理階段（構圖、色情強度、模型轉接器）都讀取並更新同一份狀態，這正是讓反覆修改、E 等級調整與換模型能保持一致的原因。
+
+| 欄位 | 意義 |
+|---|---|
+| `PRIMARY` | 觀者第一眼應注意的東西，包含女孩的造型（髮型、眼睛、服裝、配件） |
+| `EVENT` | 畫面上正在發生的事，或所呈現的狀態 |
+| `SECONDARY` | 支撐、改變或揭示主要事件的資訊 |
+| `RELATIONSHIP` | 主體、物件與表面之間如何連結（接觸、視線、因果、重量） |
+| `MOMENT` | 預備、動作、中斷、反應或事後 |
+| `COMPOSITION` | 層級、景深層次、重疊、可見度，以及視線在畫面中的移動路徑 |
+| `CAMERA` | 景別、鏡頭高度、主體朝向與視角。一定要設定：使用者指定的，或從 `references/camera.md` 選出最合適的 |
+| `LIGHTING` | 一套支撐畫面層級的一致光線邏輯 |
+| `ENVIRONMENT` | 場景與相關物件 |
+| `EVIDENCE` | 一到兩個能暗示更大故事的可見痕跡 |
+| `EROTIC_LEVEL` | 涉及色情內容時的 E0 到 E5，以及露出方式（全裸或半遮半掩） |
+| `MODEL` | Krea 2、Qwen Image 2.1 或 Anima |
+
+只填請求需要的欄位。未指定的欄位保持開放，除非場景需要做出選擇才能成立。只有在使用者要求檢視建構過程時，才把 SceneSpec 給使用者看。
+
+### 變更規則
+
+- **`same scene, <模型>`**：除了 `MODEL` 以外全部保留，然後重新編譯。
+- **`same scene, <E 等級>`**：除了 `EROTIC_LEVEL`，以及為了讓該等級自然成立而必須改變的明確視覺資訊外，全部保留。依照 `references/erotic-intensity.md` 的同場景轉換規則處理。
+- **同時改兩者**：先套用 E 等級的變更，再經過指定的轉接器編譯。
+- **指名修改**（「改成晚上」、「把她移到窗邊」）：只改指名的面向，加上為了維持場景物理合理而必須跟著改的部分。
+- **生成結果出錯**：判斷錯誤類型（主體、構圖、光線、互動、模型自行加入未要求的元素），只修改造成問題的那一個欄位，這樣下一次結果就能看出這個修改是否有效。
+- **`same scene` 但找不到先前的場景**：向使用者索取原本的提示詞或場景細節，不要自行編造。
+
+### 多版本與多主題
+
+使用者可能一次要求多個提示詞。
+
+- **同一場景的變體**（不同時間點、構圖、E 等級或模型）：建立一份基礎 SceneSpec，只改使用者要求變化的面向。每個變體在該面向上要明顯不同，其他 SceneSpec 欄位保持一致，讓變體之間真正可比較。可見內容受影響時，用詞仍可調整，例如新的鏡頭角度會改變同一道光落在哪些表面上。
+- **不同主題或場景**：各自建立獨立的 SceneSpec。
+- 使用者說「給我幾個版本」但沒說要變什麼時，選擇對這個請求最能產生明顯不同畫面的面向（通常是敘事時間點或構圖），並寫在每個標籤裡。
+
+**逐步大膽（需主動開啟）。** 預設關閉。使用者用任何語言要求每個版本比前一個更大膽時才開啟，例如「逐步大膽」、「越來越大膽」、「一版比一版大膽」或「escalate」。開啟後，第 1 版是對請求穩健、常規的詮釋。之後每一版都更進一步：更大膽的構圖（不尋常的視角、極端裁切、分割或分層構圖）、更大膽的材質或概念融合，以及更戲劇性的光線。使用者要求的內容和 E 等級保持不變，因為這裡的大膽指的是視覺創意，不是露骨程度。每個標籤要寫出推進了什麼。沒有觸發時，所有變體維持同樣穩健。
+
+## 4. 核心規則
+
+這些規則是標準來源。參考檔會指回這裡，而不是重複敘述。
+
+### 女性主體慣例
+
+- 使用者要求的女性主體用 `girl` 這個 token 表示。它是使用者針對模型設定、代表年輕成年女性外觀的 token，所以保持簡單、不加修飾。
+- 外觀透過可見特徵傳達：頭髮、表情、需要時的體態、姿勢、服裝、配件、手勢、身體朝向、互動。
+- 年齡資訊不出現在生成的提示詞中。
+
+### 使用者沒指定時，設計女孩的造型
+
+使用者沒有給任何髮型、服裝或配件細節時，自己設計一套造型。以流行的動漫角色原型為基礎，讓生成結果像一個鮮明的角色，而不是普通的預設臉。一套造型包含四個部分：髮色與髮型、瞳色、含材質的服裝，以及一到兩個代表性配件。`anime` 這類畫風詞不要加，因為畫風由 LoRA 處理。這些特徵在提示詞中如何擺放，見第 5 節。
+
+選擇符合場景地點、季節與氛圍的組合，並且每次請求都要變化。`references/character-looks.md` 有可以取用的原型組合。
+
+色情場景的服裝取自成人情境，例如居家服、洋裝、借穿伴侶的襯衫、內衣或浴袍。服裝狀態再依 E 等級決定。
+
+**概念融合。** 設計使用者沒指定的元素時（服裝、道具、材質），可以把兩個意想不到的概念融合成一個令人印象深刻的元素（`a wedding veil knotted from old fishing net`、`a lantern made of frozen glass`、`a trench coat lined with pressed autumn leaves`）。每張圖最多一到兩個融合，而且只在符合場景主題時使用。使用者自己指定的細節永遠不會被融合取代。
+
+把造型記錄在 SceneSpec 的 `PRIMARY` 欄位，讓它在同場景修改、換模型與同場景變體中保持一致。同一批中的不同主題各自有自己的造型。
+
+### 男性主體慣例
+
+- **非必要不放男性。** 只有畫面中正在發生性行為，或使用者明確要求男性出現時，才提到男性。其他情況，例如事後、單人場景，或只暗示有伴侶的場景，提示詞中完全沒有男性。也就是沒有人物、沒有身體部位，也沒有男性物品作為痕跡，例如他的襯衫或皮帶。改用她的狀態和房間來說故事。
+- 男性主體用 `boy` 表示。和 `girl` 一樣，它是使用者代表年輕成年男性的 token。
+- 只有使用者想要年長男性時，才用 `man` 或 `male`。任何語言中泛指男人、男生或男友的詞，仍然對應到 `boy`。
+- 男性描述保持最少。只給構圖需要的：token、位置、動作、與他人的接觸。不描述他的外貌、髮型、臉、體格與服裝。E 等級相關時，把他的生殖器直接作為事件的一部分寫出來。如果使用者指定了屬於故事的內容（全身濕透、撐著傘），簡短保留。只是不要自己加男性細節。視覺描述由女性主體承擔，多餘的男性細節會把模型的注意力和畫風從她身上拉走。
+- `boy` 同樣適用成年人預設。
+- 當女孩應該是唯一焦點時，進一步減少他的存在感。依存在感遞減：臉被裁出畫面、只有手或前臂進入畫面、E4 以上只有陰莖進入畫面。POV 讓他成為鏡頭本身，見 `camera.md`。
+
+### 其他主體
+
+其他主體用簡單的名稱（`the second figure`、`an older woman`、`a cat`），然後只描述場景需要的可見資訊：對延續性有意義的辨識特徵、輪廓、服裝與互動。不影響畫面的人口統計細節不寫。主體一旦命名，後續修改都沿用同一個詞，讓同場景修改保持一致。
+
+### 所有角色都是成年人
+
+這個 Skill 中的所有角色預設都是成年人。`girl` 和 `boy` 是使用者代表年輕成年人的 token，所以請求不需要聲明成年，也不會在任何 E 等級要求年齡確認。年齡用詞不出現在提示詞中。
+
+這個預設適用於每一個請求。這個 Skill 永遠不描繪請求中明確描述為未成年的角色，例如兒童或國中生。
+
+### 畫風由外部控制
+
+使用者的 LoRA 或生成流程控制整體畫風，所以提示詞把字數用在內容與組織上：主體、動作、互動、姿勢、構圖、取景、光線、環境、空間關係、相關物件與材質，以及敘事痕跡。
+
+- 渲染或媒材用語（photorealistic、cinematic、illustration、masterpiece、8k）只在使用者明確要求時出現。
+- 聽起來像畫風、但會改變場景的具體可見特性，例如 `harsh red backlight` 或 `heavy fog hiding the distant buildings`，屬於提示詞的一部分。
+- 顏色只在有作用時出現：辨識角色、連結兩個主體、區分景深，或標示物理狀態。
+
+換了 LoRA 之後，提示詞仍應有用。
+
+### 保留使用者的意圖
+
+明顯是刻意的細節都視為必要條件，包括不尋常的細節。即使常規場景比較好生成，也要保留。請求細節很多時，優先保護必要資訊，其次是支撐資訊，最後才是可有可無的裝飾。
+
+### 描述可見的證據
+
+每個重要的詞組都應該對應到畫面中看得到的東西。抽象詞會讓模型自己猜，所以在能增加控制力時，把它們轉成可見證據：
+
+- `tense` → 緊繃的肩膀、手指抓著椅子邊緣、眼睛緊盯門口
+- `luxurious` → 大量留白、深色石材表面、拉絲黃銅細節、克制的暖光
+- `intimate` → 身體距離很近、輪廓重疊、安靜的眼神交流
+
+堆疊的讚美形容詞（`beautiful, gorgeous, stunning`）資訊量不如一個具體描述（`loose black hair, relaxed shoulders, a restrained smile`），所以要替換掉。
+
+### 用正面方式描述目標狀態
+
+構圖取決於某個特定狀態時，把那個狀態當作目標來描述（`the full figure stays inside the frame with floor visible beneath her feet`、`the second figure stays small and deep in the doorway`）。目標狀態告訴模型要畫什麼。列出不想要的結果，反而大多會帶入那些被提到的概念。只有在某個排除非常必要、又沒有正面寫法時，才簡短地排除。
+
+### 條件保持一致
+
+每個面向只給一個值：一套光線邏輯、一個視角、一個時間、一種取景。互相衝突的值（柔和無影光加上正午硬光、特寫加上全身）會迫使模型取平均或隨機選一個。使用者自己的要求衝突時，選擇最能服務主要事件的詮釋，或者當選擇會大幅改變畫面時詢問使用者。
+
+### 畫面中的文字
+
+場景中有可讀的文字（招牌、紙條、螢幕）時，引用確切的文字並說明它出現在哪裡，例如 `a paper sign on the door reads "CLOSED"`。
+
+## 5. 編譯提示詞
+
+這些規則適用於所有轉接器。模型專屬的密度寫在各轉接器參考檔中。
+
+- **自然語句，不是 tag。** 適用於 Krea 和 Qwen。Anima 使用 tag 區塊加上一段敘述，見 `references/anima.md`。語法承載了關係。`A girl sits on the edge of the bed, looking toward the open door while one hand grips the wrinkled sheet` 比 `girl, bed, door, sheet, looking` 傳達的多得多。
+- **主要事件優先。** 預設語意順序：主要主體 → 動作或狀態 → 互動 → 構圖 → 鏡頭與取景 → 光線 → 環境 → 敘事或材質痕跡。其他順序讀起來更清楚時可以調整。
+- **用詞反映層級。** 主要主體用最強、最早的語言。次要細節用較安靜的措辭（`remain quieter details deeper in the room`），而不是同等份量的清單。
+- **把造型沿著觀者的視線分散。** 在提示詞中的位置本身就是隱性權重，所以在開頭貼一整塊特徵，等於告訴模型它們一樣重要。先用一到兩個錨點特徵介紹女孩（通常是髮色與輪廓），其餘特徵放在該出現的地方：眼睛與表情跟著她的視線，頭髮擺動跟著姿勢，布料跟著它覆蓋或一起移動的身體部位，配件跟著它所在的手或位置。每個造型特徵仍然出現一次，分散只是改變每個特徵放的位置。
+- **小細節要有位置。** 沒有位置的細節會漂移。`a bandage` 可能跑到任何肢體或臉上，而 `a small bandage across the bridge of her nose` 會落在預期的地方。寫出每個小細節的位置（左側髮髻上的髮夾、落在鎖骨上的墜飾、下臉頰的淚痕）。
+- **服裝要有材質。** 寫出每件衣物的材質或質地（`a loose cream knit cardigan`、`a glossy black satin slip dress`、`a cotton yukata with printed morning glories`）。材質告訴模型布料怎麼摺、怎麼反光、怎麼對光線反應。其他物件的材質在重要時用行為描述：亞麻 → `irregular woven fibers, matte surface, soft creases`，濕潤皮膚 → `small reflective highlights following the curvature`。
+- **環境裡要有實體。** 場景有地點時，至少用三個具體物件或結構撐起空間，依 `references/composition.md` 挑選有故事價值的物件（`a rain-streaked window, a low shelf of paperbacks, a mug going cold on the sill`）。只寫 `in a bedroom` 這樣的地點名稱，空間就交給運氣。例外是使用者要求素色背景、極簡場景或透明背景。
+- **鏡頭用可見的方式寫。** 每個提示詞都要交代鏡頭：使用者指定的，或透過 `references/camera.md` 選出最合適的。每個術語都附上畫面實際包含什麼（`cowboy shot, framed from mid-thigh up`）。焦距、光圈、ISO、鏡頭類型與 `bokeh` 等真實相機術語永遠不出現，即使使用者要求也一樣，而是轉譯成可見的取景與模糊。
+- **E 等級留在內部。** 提示詞中永遠不會出現 `E0` 到 `E5`，只會出現該等級代表的可見場景資訊。
+- **最後才壓縮。** 刪掉重複的同義詞、重述的動作、裝飾性形容詞，以及其他詞組已經隱含的細節。要保護的是：誰在動作、誰在反應、什麼碰到什麼、相對位置、層級，以及承載故事的痕跡。
+- **一段可複製的段落。** 輸出連續的敘述，句子完整、沒有硬換行，才能乾淨地貼上生成器。Anima 的提示詞是 tag 區塊、一行空白，再接敘述，整體仍是一個可複製的提示詞。
+
+## 6. 參考檔路由
+
+只讀請求需要的檔案。每個檔案開頭都有目錄。
+
+| 讀取 | 時機 |
+|---|---|
+| `references/krea.md` | 每個 Krea 2 提示詞（密度、提示詞形式、範例） |
+| `references/qwen.md` | 每個 Qwen Image 2.1 raw 提示詞（密度、空間語言、範例） |
+| `references/anima.md` | 每個 Anima 提示詞（tag 規則與順序、安全 tag、鏡頭 tag、權重） |
+| `references/camera.md` | 每個提示詞（景別、角度、視角、裁切、使用者沒指定時如何選鏡頭） |
+| `references/composition.md` | 多個主體、主要加次要主題、故事文字、複雜環境、構圖或時間點變體，或容易變成物件清單的場景 |
+| `references/erotic-intensity.md` | 任何色情內容、E 等級請求，或同場景的 E 等級變更 |
+| `references/character-looks.md` | 使用者或先前對話沒有指定女孩的髮型、服裝或配件時（反推不使用） |
+| `references/reverse-prompt.md` | 使用者提供圖片要反推成提示詞，以重現其構圖時 |
+
+簡單的單一主體場景通常只需要轉接器檔案和 `camera.md`。
+
+### 色情強度等級
+
+| 等級 | 名稱 | 常見說法 |
+|---|---|---|
+| E0 | SFW | SFW |
+| E1 | Suggestive | 曖昧 |
+| E2 | Sensual | 性感 |
+| E3 | Erotic nudity | 裸體情色 |
+| E4 | Explicit | 強烈色情 |
+| E5 | Fully explicit | 赤裸色情 |
+
+使用者可以用數字、名稱，或自己語言中的對應說法指定等級。
+
+使用使用者指定的等級，或把相近的說法對應到最接近的等級。請求明顯隱含某種露骨程度時，使用能忠實呈現它的最低等級。兩種詮釋同樣合理、又會產生明顯不同的畫面時，詢問使用者。露骨程度只在使用者要求時提高。
+
+### 露出方式：全裸或半遮半掩
+
+這條規則適用於 E2 到 E5 的每個等級。E 等級決定*可以看到什麼*，露出方式決定*衣物和它的關係*。
+
+- **全裸**：她身上穿的東西都不遮住該等級要呈現的部位。只剩配件，或什麼都沒有。
+- **半遮半掩**：衣物仍穿在身上，但框出露出的部分。襯衫敞開露出一邊乳房、內褲被拉到一旁、裙子被掀起，或濕透的布料變得透明。部分遮蔽常常比全裸更色情，因為它呈現脫衣的瞬間，並保留了一些沒被看見的東西。
+
+**由誰決定。** 使用者用任何語言要求半遮半掩、若隱若現、衣服半脫或 `partially clothed` 時，使用半遮半掩。要求全裸時，使用全裸。其他情況選擇更適合場景的方式：
+- 衣物承載故事時用半遮半掩：脫衣正在進行或被打斷、服裝身分很重要（女僕、制服、和服）、有秘密感或匆忙感，或是穿著衣服做完某件事後的事後場景。
+- 身體本身是主題時用全裸：洗澡、溫泉、擺姿勢讓人看、事後躺在床上，或穿衣服不合理的場景。
+
+**半遮半掩在各等級要呈現什麼。** 露出方式永遠不會遮住該等級要求的內容：
+- **E2**：衣物滑落，露出到邊緣的皮膚，例如乳房下緣、裸露的臀側，或濕布料下的乳頭輪廓，不露出乳頭或陰部。
+- **E3**：至少露出一邊乳頭或陰部。明確寫出哪些部位裸露、哪些仍被遮住：`her shirt hangs open on the right, baring her right breast and nipple, while the left side still covers her other breast`。
+- **E4 和 E5**：性行為或露骨細節必須完全看得清楚。衣物被推開、掀起或敞開在它周圍，永遠不會蓋在上面。
+
+一定要明確寫出露出與遮蔽的部位。像 `partially revealing` 這種模糊說法會讓模型把全部都遮住。把露出方式和 E 等級一起記錄在 SceneSpec 中，同場景修改時沿用，除非使用者改變它。
+
+### 規劃中的擴充（尚未支援）
+
+這個流程的設計讓新目標可以直接接上，不需要改動 SceneSpec：新的輸出格式等於一個新的轉接器檔案，加上上面路由表的一列。規劃中的是 tag 型目標（NovelAI、Stable Diffusion）：Danbooru tag 加上各平台的權重語法，從同一份 SceneSpec 編譯，檔案為 `references/nai.md` 和 `references/sd.md`。Anima 已經透過 `references/anima.md` 支援。
+
+這些檔案存在之前，用使用者的語言告訴對方這個模式尚未支援，並改為提供 Krea、Qwen 或 Anima 版本。
+
+## 7. 輸出格式
+
+**單一提示詞**：只回傳完成的英文提示詞。
+
+**多個模型**：每個提示詞標上模型名稱。
+
+```
+Krea 2:
+[prompt]
+
+Qwen Image 2.1:
+[prompt]
+
+Anima:
+[prompt]
+```
+
+**多個版本或主題**：每個提示詞前加一個使用者語言的簡短標籤，說明它的差異，接著是提示詞：
+
+```
+1. [標籤，例如 事件前・門口的身影]
+[prompt]
+
+2. [標籤，例如 事件後・散落的外套]
+[prompt]
+```
+
+只有使用者要求檢視建構過程時，才在提示詞後附上簡短說明。負面提示詞、token 權重、tag 語法與參數建議只在要求時出現。Anima 的 tag 區塊與有限的權重本身就是 Anima 格式的一部分。
+
+## 8. 範例
+
+這個例子中使用者沒有給外觀細節，所以女孩的造型來自 `references/character-looks.md`，並在每個版本中保持一致。造型分散在每個提示詞中：頭髮和輪廓介紹她，耳機在脖子上，帽T袖子跟著她的手，眼睛跟著她的視線出現。
+
+**單一提示詞，Krea 2**
+
+輸入：`女孩坐在窗邊看雨，有點在等人的感覺`
+
+輸出：
+A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill, one knee drawn up and her chin resting on it, the hem of her oversized gray fleece hoodie bunched around her hips. Her blue eyes follow the rain-covered street below, while her phone lies face-up and dark on the sill beside her hand, half hidden under the long hoodie sleeve. Over-ear headphones rest silent around her neck. An eye-level three-quarter front view, framed from the waist up, keeps her and the tall rain-streaked window together, with a mug going cold on the sill and a low shelf of paperbacks behind her. Cool light from the window outlines her face, hair and fingers, while the room behind her stays dim.
+
+**同場景，換模型**（`same scene, Qwen`）
+
+A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill, one knee drawn up and her chin resting on it, the hem of her oversized gray fleece hoodie bunched around her hips. An eye-level three-quarter front view, framed from the waist up, places her in the right half of the frame, with the tall rain-streaked window and the blurred street lights behind her on the left. Her blue eyes follow the street below. Her phone lies face-up and dark on the sill beside her right hand, half hidden under the long hoodie sleeve, within reach but untouched. Over-ear headphones rest silent around her neck. A white mug sits near the far end of the sill, and a low shelf of paperbacks stands against the dim wall behind her. Cool light from the window illuminates her face, hair and fingers, while the room stays dim and soft. Raindrops streak down the glass beside her shoulder.
+
+場景和造型完全相同。Qwen raw 得到更明確的空間條件，因為沒有提示詞擴寫器幫它補上。
+
+**多個版本**（`給我三個版本，不同時間點`）
+
+1. 等待中・手機沒亮
+A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill with one knee drawn up, the long sleeve of her oversized gray fleece hoodie covering the dark phone beside her hand. Her blue eyes follow the rain-covered street below, and over-ear headphones rest around her neck. An eye-level shot framed from the waist up keeps the cold mug and a low shelf of paperbacks in the dim room behind her, while cool window light outlines her face.
+
+2. 手機亮起的瞬間
+A girl with a short platinum-blonde bob turns sharply on a wide wooden windowsill toward the phone lighting up beside her hand, her drawn-up knee dropping and the hoodie sleeve sliding back from her wrist as she reaches for it. In a close-up, the face filling most of the frame, the screen's glow catches her widening blue eyes and the headphones around her neck. Rain streaks the window behind her, and the mug and bookshelf stay dark in the room.
+
+3. 等待之後・雨停了
+A girl with a short platinum-blonde bob sleeps curled against the window frame on a wide wooden windowsill, her cheek pressed into the gray fleece of her hoodie sleeve and the dark phone loose in her open hand. The headphones have slipped to her collarbone. A high-angle view looks down on her from above the room, and the rain has stopped, and pale early light rests on the wet glass, the empty street below, and the cold mug still on the sill.
+
+## 9. 最終檢查
+
+回傳前，在內部確認：
+
+- 使用者要求的內容都在，而且畫面呈現的是事件，不是物件清單。
+- 主要主體最先被看到。次要資訊以較低的份量支撐或重新詮釋它。
+- 位置、接觸與重量在物理上合理。多個角色讀起來是同一個互動。
+- 女性主體使用 `girl`，沒有年齡用詞，也沒有加入未要求的畫風用語。
+- 條件一致（一套光線邏輯、一個視角）。
+- 鏡頭以可見的方式描述，沒有真實相機術語。每個描述的元素都通過 `camera.md` 的可見性檢查：它在畫面內、從這個角度面向鏡頭，而且沒有被她的姿勢擋住。畫面明顯會呈現、且場景需要的東西都沒有遺漏。
+- E 等級符合請求，構圖仍然撐起畫面。同場景修改保留了場景。
+- 用詞與密度符合所選模型。提示詞是英文、一段可複製的段落，每一句都增加了可見資訊。
