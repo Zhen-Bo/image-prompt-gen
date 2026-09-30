@@ -263,31 +263,7 @@ Add a compact explanation after the prompt only when the user asks to see the co
 
 ## 8. Examples
 
-The user gave no appearance details here, so the girl's look comes from `references/character-looks.md` and stays the same in every version. The look is spread through each prompt: the hair and silhouette introduce her, the headphones sit at her neck, the hoodie sleeve moves with her hand, and her eyes appear with her gaze.
-
-**Single prompt, Krea 2**
-
-Input: `A girl sits by the window watching the rain, like she's waiting for someone`
-
-Output:
-A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill, one knee drawn up and her chin resting on it, the hem of her oversized gray fleece hoodie bunched around her hips. Her blue eyes follow the rain-covered street below, while her phone lies face-up and dark on the sill beside her hand, half hidden under the long hoodie sleeve. Over-ear headphones rest silent around her neck. An eye-level three-quarter front view, framed from the waist up, keeps her and the tall rain-streaked window together, with a mug going cold on the sill and a low shelf of paperbacks behind her. Cool light from the window outlines her face, hair and fingers, while the room behind her stays dim.
-
-**Same scene, model switch** (`same scene, Qwen`)
-
-A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill, one knee drawn up and her chin resting on it, the hem of her oversized gray fleece hoodie bunched around her hips. An eye-level three-quarter front view, framed from the waist up, places her in the right half of the frame, with the tall rain-streaked window and the blurred street lights behind her on the left. Her blue eyes follow the street below. Her phone lies face-up and dark on the sill beside her right hand, half hidden under the long hoodie sleeve, within reach but untouched. Over-ear headphones rest silent around her neck. A white mug sits near the far end of the sill, and a low shelf of paperbacks stands against the dim wall behind her. Cool light from the window illuminates her face, hair and fingers, while the room stays dim and soft. Raindrops streak down the glass beside her shoulder.
-
-The scene and the look are identical. Qwen raw receives more explicit spatial conditioning because no prompt expander fills it in.
-
-**Several versions** (`give me three versions at different moments`)
-
-1. Waiting: the phone stays dark
-A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill with one knee drawn up, the long sleeve of her oversized gray fleece hoodie covering the dark phone beside her hand. Her blue eyes follow the rain-covered street below, and over-ear headphones rest around her neck. An eye-level shot framed from the waist up keeps the cold mug and a low shelf of paperbacks in the dim room behind her, while cool window light outlines her face.
-
-2. The moment the phone lights up
-A girl with a short platinum-blonde bob turns sharply on a wide wooden windowsill toward the phone lighting up beside her hand, her drawn-up knee dropping and the hoodie sleeve sliding back from her wrist as she reaches for it. In a close-up, the face filling most of the frame, the screen's glow catches her widening blue eyes and the headphones around her neck. Rain streaks the window behind her, and the mug and bookshelf stay dark in the room.
-
-3. After waiting: the rain has stopped
-A girl with a short platinum-blonde bob sleeps curled against the window frame on a wide wooden windowsill, her cheek pressed into the gray fleece of her hoodie sleeve and the dark phone loose in her open hand. The headphones have slipped to her collarbone. A high-angle view looks down on her from above the room, and the rain has stopped, and pale early light rests on the wet glass, the empty street below, and the cold mug still on the sill.
+Example prompts live in each adapter file (`references/krea.md` section 5, `references/qwen.md` section 9, `references/anima.md` section 9). Read only the target model's examples.
 
 ## 9. Final check
 

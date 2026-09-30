@@ -259,31 +259,7 @@ Anima:
 
 ## 8. 範例
 
-這個例子中使用者沒有給外觀細節，所以女孩的造型來自 `references/character-looks.md`，並在每個版本中保持一致。造型分散在每個提示詞中：頭髮和輪廓介紹她，耳機在脖子上，帽T袖子跟著她的手，眼睛跟著她的視線出現。
-
-**單一提示詞，Krea 2**
-
-輸入：`女孩坐在窗邊看雨，有點在等人的感覺`
-
-輸出：
-A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill, one knee drawn up and her chin resting on it, the hem of her oversized gray fleece hoodie bunched around her hips. Her blue eyes follow the rain-covered street below, while her phone lies face-up and dark on the sill beside her hand, half hidden under the long hoodie sleeve. Over-ear headphones rest silent around her neck. An eye-level three-quarter front view, framed from the waist up, keeps her and the tall rain-streaked window together, with a mug going cold on the sill and a low shelf of paperbacks behind her. Cool light from the window outlines her face, hair and fingers, while the room behind her stays dim.
-
-**同場景，換模型**（`same scene, Qwen`）
-
-A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill, one knee drawn up and her chin resting on it, the hem of her oversized gray fleece hoodie bunched around her hips. An eye-level three-quarter front view, framed from the waist up, places her in the right half of the frame, with the tall rain-streaked window and the blurred street lights behind her on the left. Her blue eyes follow the street below. Her phone lies face-up and dark on the sill beside her right hand, half hidden under the long hoodie sleeve, within reach but untouched. Over-ear headphones rest silent around her neck. A white mug sits near the far end of the sill, and a low shelf of paperbacks stands against the dim wall behind her. Cool light from the window illuminates her face, hair and fingers, while the room stays dim and soft. Raindrops streak down the glass beside her shoulder.
-
-場景和造型完全相同。Qwen raw 得到更明確的空間條件，因為沒有提示詞擴寫器幫它補上。
-
-**多個版本**（`給我三個版本，不同時間點`）
-
-1. 等待中・手機沒亮
-A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill with one knee drawn up, the long sleeve of her oversized gray fleece hoodie covering the dark phone beside her hand. Her blue eyes follow the rain-covered street below, and over-ear headphones rest around her neck. An eye-level shot framed from the waist up keeps the cold mug and a low shelf of paperbacks in the dim room behind her, while cool window light outlines her face.
-
-2. 手機亮起的瞬間
-A girl with a short platinum-blonde bob turns sharply on a wide wooden windowsill toward the phone lighting up beside her hand, her drawn-up knee dropping and the hoodie sleeve sliding back from her wrist as she reaches for it. In a close-up, the face filling most of the frame, the screen's glow catches her widening blue eyes and the headphones around her neck. Rain streaks the window behind her, and the mug and bookshelf stay dark in the room.
-
-3. 等待之後・雨停了
-A girl with a short platinum-blonde bob sleeps curled against the window frame on a wide wooden windowsill, her cheek pressed into the gray fleece of her hoodie sleeve and the dark phone loose in her open hand. The headphones have slipped to her collarbone. A high-angle view looks down on her from above the room, and the rain has stopped, and pale early light rests on the wet glass, the empty street below, and the cold mug still on the sill.
+範例提示詞放在各模型的轉接器檔案中（`references/krea.md` 第 5 節、`references/qwen.md` 第 9 節、`references/anima.md` 第 9 節）。只讀目標模型的範例。
 
 ## 9. 最終檢查
 

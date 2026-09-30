@@ -65,6 +65,24 @@ A girl sits on the edge of an unmade bed, turning toward the half-open door whil
 
 A girl leans backward against the edge of a table as the second figure moves close from her left, their bodies forming one diagonal shape across the foreground in a two-shot framed from mid-thigh up. One hand braces against the tabletop while her head turns toward the other figure. A narrow side light separates their overlapping silhouettes from the darker room.
 
+**Designed look, single prompt.** The user gave no appearance details in the next two examples, so the girl's look comes from `references/character-looks.md` and stays the same in every version. The look is spread through each prompt: the hair and silhouette introduce her, the headphones sit at her neck, the hoodie sleeve moves with her hand, and her eyes appear with her gaze.
+
+Input: `A girl sits by the window watching the rain, like she's waiting for someone`
+
+Output:
+A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill, one knee drawn up and her chin resting on it, the hem of her oversized gray fleece hoodie bunched around her hips. Her blue eyes follow the rain-covered street below, while her phone lies face-up and dark on the sill beside her hand, half hidden under the long hoodie sleeve. Over-ear headphones rest silent around her neck. An eye-level three-quarter front view, framed from the waist up, keeps her and the tall rain-streaked window together, with a mug going cold on the sill and a low shelf of paperbacks behind her. Cool light from the window outlines her face, hair and fingers, while the room behind her stays dim.
+
+**Several versions** (`give me three versions at different moments`)
+
+1. Waiting: the phone stays dark
+A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill with one knee drawn up, the long sleeve of her oversized gray fleece hoodie covering the dark phone beside her hand. Her blue eyes follow the rain-covered street below, and over-ear headphones rest around her neck. An eye-level shot framed from the waist up keeps the cold mug and a low shelf of paperbacks in the dim room behind her, while cool window light outlines her face.
+
+2. The moment the phone lights up
+A girl with a short platinum-blonde bob turns sharply on a wide wooden windowsill toward the phone lighting up beside her hand, her drawn-up knee dropping and the hoodie sleeve sliding back from her wrist as she reaches for it. In a close-up, the face filling most of the frame, the screen's glow catches her widening blue eyes and the headphones around her neck. Rain streaks the window behind her, and the mug and bookshelf stay dark in the room.
+
+3. After waiting: the rain has stopped
+A girl with a short platinum-blonde bob sleeps curled against the window frame on a wide wooden windowsill, her cheek pressed into the gray fleece of her hoodie sleeve and the dark phone loose in her open hand. The headphones have slipped to her collarbone. A high-angle view looks down on her from above the room, and the rain has stopped, and pale early light rests on the wet glass, the empty street below, and the cold mug still on the sill.
+
 ## 6. Compression pass
 
 Before returning, ask of each phrase:

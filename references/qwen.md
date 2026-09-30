@@ -108,6 +108,12 @@ Compared with Krea, this states the foreground and background, the left and righ
 
 A girl leans backward against the edge of a table while the second figure approaches closely from her left. Their bodies overlap across the foreground and form a single diagonal composition. Her right hand supports her weight against the tabletop while her head turns toward the other figure. A two-shot framed from mid-thigh up at eye level keeps their body interaction and the edge of the table visible. A narrow side light defines their overlapping silhouettes against the darker room.
 
+**Same scene, model switch.** The designed-look scene from the Krea examples, recompiled with `same scene, Qwen`:
+
+A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill, one knee drawn up and her chin resting on it, the hem of her oversized gray fleece hoodie bunched around her hips. An eye-level three-quarter front view, framed from the waist up, places her in the right half of the frame, with the tall rain-streaked window and the blurred street lights behind her on the left. Her blue eyes follow the street below. Her phone lies face-up and dark on the sill beside her right hand, half hidden under the long hoodie sleeve, within reach but untouched. Over-ear headphones rest silent around her neck. A white mug sits near the far end of the sill, and a low shelf of paperbacks stands against the dim wall behind her. Cool light from the window illuminates her face, hair and fingers, while the room stays dim and soft. Raindrops streak down the glass beside her shoulder.
+
+The scene and the look are identical. Qwen raw receives more explicit spatial conditioning because no prompt expander fills it in.
+
 ## 10. Compression pass
 
 Raw does not mean uncompressed. After adding the needed conditioning, remove duplicated spatial descriptions, restated actions, redundant adjectives, style padding, generic quality terms, materials that do not affect the scene, and explanations the evidence already shows. When the prompt is overloaded, cut from the bottom of this order: event → relationship → composition → action and reaction → explicit information the level requires → lighting → environment → evidence → materials. The result should be detailed enough to rebuild the scene, yet compact enough that the key relationships are not buried.
