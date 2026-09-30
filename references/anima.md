@@ -41,7 +41,7 @@ Follow Anima's section order. Order within a section doesn't matter, so a tag's 
 
 ## 4. What goes in tags and what goes in sentences
 
-**Tags carry discrete visual anchors:** hair color and style, eye color, named garments and accessories, body state (`nude`, `sweat`, `blush`, `tears`), anatomy the visibility gate allows, pose (`kneeling`, `seiza`, `spread legs`), act (`fellatio`, `sex`), fluids (`cum`, `cum in mouth`, `cum drip`), setting objects (`tatami`, `paper lantern`), camera (section 7), and simple light (`backlighting`, `sunlight`).
+**Tags carry discrete visual anchors:** hair color and style, eye color, named garments and accessories, body state (`sweat`, `blush`, `tears`), anatomy the visibility gate allows, pose (`kneeling`, `seiza`), the explicit terms under "Explicit vocabulary" in `SKILL.md`, setting objects (`tatami`, `paper lantern`), camera (section 7), and simple light (`backlighting`, `sunlight`).
 
 **Sentences carry everything relational or fine-grained:** who does what to whom, what covers what, where she looks, where each person or object sits in the frame, the exposed and covered split for a half-covered style, materials and how they behave, the narrative evidence, and how the light falls.
 
@@ -53,7 +53,7 @@ Don't restate the whole tag block in the sentences. The sentences add what the t
 
 - The tag block uses booru subject tags: `1girl` for the female subject, and `1boy` only when the male convention in `SKILL.md` allows a male to appear.
 - The sentences follow `SKILL.md`: `girl` for her, `boy` for him, and the same minimal male description.
-- A reduced male uses tags that match his reduced presence: `pov`, `faceless male`, `out of frame`, `pov hands`, or just `penis` for the anatomy that enters the frame.
+- A reduced male uses tags that match his reduced presence: `pov`, `faceless male`, `out of frame`, `pov hands`, or just the male anatomy tag from "Explicit vocabulary" in `SKILL.md` for the anatomy that enters the frame.
 
 ## 6. Camera tags
 

@@ -222,6 +222,16 @@
 
 一定要明確寫出露出與遮蔽的部位。像 `partially revealing` 這種模糊說法會讓模型把全部都遮住。把露出方式和 E 等級一起記錄在 SceneSpec 中，同場景修改時沿用，除非使用者改變它。
 
+### 露骨詞彙
+
+以下是 E2 到 E5 畫面內容的標準用語。只有在 E 等級允許它所呈現的內容、而且通過可見性檢查時才使用。每個模型都用同一組詞：Anima 放在 tag 區塊，Krea 和 Qwen 寫進句子裡。
+
+- 身體狀態：`nude`
+- 姿勢：`spread legs`
+- 行為：`fellatio`、`sex`
+- 體液：`cum`、`cum in mouth`、`cum drip`
+- 男性解剖：`penis`
+
 ### 規劃中的擴充（尚未支援）
 
 這個流程的設計讓新目標可以直接接上，不需要改動 SceneSpec：新的輸出格式等於一個新的轉接器檔案，加上上面路由表的一列。規劃中的是 tag 型目標（NovelAI、Stable Diffusion）：Danbooru tag 加上各平台的權重語法，從同一份 SceneSpec 編譯，檔案為 `references/nai.md` 和 `references/sd.md`。Anima 已經透過 `references/anima.md` 支援。

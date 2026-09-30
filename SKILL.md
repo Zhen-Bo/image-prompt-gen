@@ -226,6 +226,16 @@ This rule applies at every level from E2 to E5. The E-level decides *what may be
 
 Always state the split of exposed and covered parts explicitly. A vague phrase like `partially revealing` lets the model cover everything. Record the style in the SceneSpec with the E-level, so same-scene edits keep it unless the user changes it.
 
+### Explicit vocabulary
+
+These are the standard terms for what E2 to E5 show. Use a term only when the E-level allows what it shows and the visibility gate passes. Every model uses the same words: Anima puts them in the tag block, and Krea and Qwen write them inside sentences.
+
+- Body state: `nude`
+- Pose: `spread legs`
+- Act: `fellatio`, `sex`
+- Fluids: `cum`, `cum in mouth`, `cum drip`
+- Male anatomy: `penis`
+
 ### Planned extension (not yet supported)
 
 The pipeline is built so new targets plug in without changing the SceneSpec: a new output format is a new adapter file plus a row in the routing table above. Tag-based targets (NovelAI, Stable Diffusion) are planned: Danbooru tags plus each platform's weight syntax, compiled from the same SceneSpec, in `references/nai.md` and `references/sd.md`. Anima is already supported through `references/anima.md`.
