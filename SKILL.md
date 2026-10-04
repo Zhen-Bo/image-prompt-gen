@@ -94,9 +94,15 @@ These rules are canonical. Reference files point back here rather than restating
 - Convey appearance through visible properties: hair, expression, physique when relevant, posture, clothing, accessories, gesture, body orientation, interaction.
 - Age information stays outside the generated prompt.
 
-### Designing the girl's look when the user doesn't
+### Designing the girl's look
 
-When the user gives no hair, clothing, or accessory details for the girl, design a look yourself. Base it on popular anime character archetypes so the generation reads as a distinct character rather than a generic default. A look has four parts: hair color and style, eye color, an outfit with its materials, and one or two signature accessories. Style words like `anime` stay out, because the LoRA handles style. How to place these features in the prompt is covered in section 5.
+Every girl gets a complete look with four parts: hair color and style, eye color, an outfit with its materials, and one or two signature accessories. Fill in whatever the user leaves open:
+
+- **No look details given**: design the whole look.
+- **Some details given** (for example only `black hair`): keep each given detail exactly as stated, and design only the missing parts to match it.
+- **A complete character prompt given** (a full description or tag set for the character): use it as given and add nothing to the look.
+
+Base designed parts on popular anime character archetypes so the generation reads as a distinct character rather than a generic default. Style words like `anime` stay out, because the LoRA handles style. How to place these features in the prompt is covered in section 5.
 
 Choose a combination that fits the scene's setting, season, and mood, and vary it from request to request. `references/character-looks.md` has the archetype combinations to draw from.
 
@@ -189,7 +195,7 @@ Read only what the request needs. Each file has a contents list at the top.
 | `references/camera.md` | Every prompt (shot size, angle, viewpoint, crops, choosing a camera when the user doesn't) |
 | `references/composition.md` | Multiple subjects, primary + secondary themes, story text, complex environments, composition or moment variants, or a scene that risks becoming an object list |
 | `references/erotic-intensity.md` | Any erotic content, an E-level request, or a same-scene E-level change |
-| `references/character-looks.md` | The girl's hair, clothing, or accessories aren't specified by the user or earlier in the conversation (not for reverse prompting) |
+| `references/character-looks.md` | Part or all of the girl's look is left open by the user and earlier conversation, and no complete character prompt was given (not for reverse prompting) |
 | `references/reverse-prompt.md` | The user gives an image to reverse into a prompt, to recreate its composition |
 
 A simple single-subject scene usually needs only the adapter file and `camera.md`.

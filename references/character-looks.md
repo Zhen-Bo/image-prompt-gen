@@ -1,6 +1,6 @@
 # Character Looks
 
-Read this when the user asks for a girl but gives no hair, clothing, or accessory details. The rules for when and how to design a look are in `SKILL.md` ("Designing the girl's look when the user doesn't"). This file only holds material to draw from.
+Read this when part or all of the girl's look is left open. The rules for when and how to design a look are in `SKILL.md` ("Designing the girl's look"). This file only holds material to draw from.
 
 ## How to use
 
