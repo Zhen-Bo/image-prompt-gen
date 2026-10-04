@@ -1,6 +1,6 @@
 ---
 name: image-prompt-gen
-description: Write generation-ready English image prompts for local Krea 2 (precise), Qwen Image 2.1 raw/no-PE, and Anima (booru tags plus natural language). Always use this skill whenever a prompt is needed for Krea 2, Qwen Image 2.1, or Anima, including writing, rewriting, varying, or batching prompts, switching between these models, "same scene" edits, erotic-intensity (E0–E5) changes, and reverse prompting from an image while keeping its composition. Also use it for image requests that name no model, such as "generate an image of ..." or a pasted scene or story, because the skill asks which of its models to target. Do not use it when the request targets any other image model or service, such as GPT Image (gpt-image-1, gpt-image-2), DALL-E, Midjourney, Stable Diffusion, SDXL, Flux, NovelAI, Imagen, Nano Banana, or Seedream.
+description: Write English image prompts for Krea 2, Qwen Image 2.1, and Anima, from a text idea or by reverse prompting an image. Use it only when the user wants a prompt for one of these models. Not for generating images or for other models.
 metadata:
   short-description: Turn visual ideas or images into Krea 2, Qwen Image 2.1, or Anima prompts
 ---
