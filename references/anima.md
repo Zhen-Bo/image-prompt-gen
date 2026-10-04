@@ -41,7 +41,7 @@ Follow Anima's section order. Order within a section doesn't matter, so a tag's 
 
 ## 4. What goes in tags and what goes in sentences
 
-**Tags carry discrete visual anchors:** hair color and style, eye color, named garments and accessories, body state (`sweat`, `blush`, `tears`), anatomy the visibility gate allows, pose (`kneeling`, `seiza`), the explicit terms under "Explicit vocabulary" in `SKILL.md`, setting objects (`tatami`, `paper lantern`), camera (section 7), and simple light (`backlighting`, `sunlight`).
+**Tags carry discrete visual anchors:** hair color and style, eye color, named garments and accessories, body state (`sweat`, `blush`, `tears`), anatomy the visibility gate allows, pose (`kneeling`, `seiza`), the explicit terms under "Explicit vocabulary" in `SKILL.md`, setting objects (`tatami`, `paper lantern`), camera (section 6), and simple light (`backlighting`, `sunlight`).
 
 **Sentences carry everything relational or fine-grained:** who does what to whom, what covers what, where she looks, where each person or object sits in the frame, the exposed and covered split for a half-covered style, materials and how they behave, the narrative evidence, and how the light falls.
 
