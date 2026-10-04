@@ -72,14 +72,15 @@ Fill only the fields the request needs. Unspecified fields stay open unless a ch
 - **Named edit** ("make it night", "move her to the window"): change only the named dimensions, plus whatever else must change to keep the scene physically coherent.
 - **Generated image came out wrong**: identify the failure category (subject, composition, lighting, interaction, the model adding unrequested elements) and change the one field responsible, so the next result shows whether that change worked.
 - **`same scene` with no recoverable prior scene**: ask for the source prompt or scene details instead of inventing them.
+- **Minimal edit.** When an edit stays in the same model, start from the existing prompt and rewrite only the phrases the change touches. Every other sentence keeps its original wording. A model switch is the exception, because the format itself changes.
 
 ### Multiple versions and themes
 
 The user may ask for several prompts at once.
 
-- **Variants of one scene** (different moments, compositions, E-levels, or models): build one base SceneSpec, then vary only the dimension the user asked to vary. Each variant should differ clearly in that dimension and keep the other SceneSpec fields the same, so the variants are genuinely comparable. Wording may still adapt where the change affects what is visible. For example, a new camera angle changes which surfaces the same light falls on.
+- **Several versions of a new theme** ("a few versions", "different moments", "different compositions"): keep the theme, the user's specified details, and the girl's look identical in every version. Camera, composition, moment, and light may all change together, so each version gives the theme a clearly different take. Each label names what makes it different.
+- **Several versions of an existing prompt** (several E-levels, several models, or edits to a prompt already written): each version follows the mutation rules above, so it changes only what was asked and stays directly comparable.
 - **Different themes or scenes**: build an independent SceneSpec for each one.
-- If the user asks for "a few versions" without saying what should vary, choose the dimension that gives the most meaningfully different images for this request (usually narrative moment or composition), and state it in each label.
 
 **Escalating boldness (opt-in).** This mode is off unless the user turns it on by asking, in any language, for each version to be bolder than the last (for example "escalate" or "make each one bolder"). When it is on, version 1 is a strong, conventional reading of the request. Each later version pushes further, with a more daring composition (unusual viewpoint, extreme crop, split or layered framing), bolder material or concept fusions, and more dramatic light. The user's required content and the E-level stay fixed, because boldness here is about visual ideas, not explicitness. Each label names what was pushed. Without the trigger, variants stay equally grounded.
 

@@ -39,7 +39,7 @@ Every request becomes one internal scene description (the SceneSpec). Each model
 - **Consistent edits.** `same scene, Qwen` or `same scene, E2` keeps everything else fixed.
 - **Reverse prompting.** Give it an image and a format. It rebuilds the framing and pose so a different LoRA still lands the same composition.
 - **Designed characters.** When you skip the look, it designs one from anime archetypes, with materials and accessories placed where they belong.
-- **Fair variants.** Ask for several versions and it varies one dimension at a time, so you can compare them.
+- **Varied takes, minimal edits.** Ask for several versions of a theme and each one explores it with a different camera, composition, moment, or light. Edit an existing prompt and only the affected words change.
 - **LoRA controls style.** Rendering style is left to your LoRA, so prompts never add words like `masterpiece` unless you ask.
 
 ## Installation
@@ -78,7 +78,7 @@ hoodie bunched around her hips. Her blue eyes follow the rain-covered street bel
 | `same scene, Anima` | The same scene, written for another model |
 | `same scene, E2` | The same scene at a new intensity level |
 | `make it night` | Changes only what you named |
-| `three versions at different moments` | Three versions that differ in one dimension |
+| `three versions at different moments` | Three different takes on the same theme |
 | `escalate` | Each version pushes composition and ideas further |
 | An image plus a format | A reverse prompt that keeps the image's composition |
 
