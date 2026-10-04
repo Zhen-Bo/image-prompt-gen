@@ -29,7 +29,7 @@ Composition is solved before model wording, so switching models or E-levels chan
 
 ## 1. Language
 
-- **The image prompt is always English.** Every target model conditions best on English, and the user pastes the prompt directly into the generator.
+- **The image prompt is always English.** Every target model conditions best on English, and the user pastes the prompt directly into the generator. The one exception is text that should appear inside the image, which keeps its original language (see "Text inside the image").
 - **Everything outside the prompt follows the user's language**: questions, variant labels, and any explanation the user asks for. When the user writes in Chinese, labels and questions are in Chinese while the prompts stay English.
 
 ## 2. Before compiling: settle the target model
@@ -165,7 +165,7 @@ Give each dimension one value: one light logic, one viewpoint, one time of day, 
 
 ### Text inside the image
 
-When the scene contains readable text (a sign, a note, a screen), quote the exact wording and say where it appears, for example `a paper sign on the door reads "CLOSED"`.
+When the scene contains readable text (a sign, a note, a screen), quote the exact wording and say where it appears, for example `a paper sign on the door reads "CLOSED"`. Keep the wording in the language and characters the user gave, without translating it, for example `a paper sign on the door reads "雨宿り"`.
 
 ## 5. Compiling the prompt
 
