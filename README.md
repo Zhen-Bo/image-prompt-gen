@@ -127,7 +127,7 @@ The agent reads only the references a request needs, so simple prompts stay ligh
 
 ## Limitations
 
-- Prompts are written for the listed models. Other models may need their own adapter.
+- Only the listed models are supported. Asking for another model gets a short note instead of a prompt.
 - Reverse prompting is only as accurate as your agent's vision. Left and right, small accessories, and head tilt are the details most often misread, so check them before you generate.
 - Generate at the source image's aspect ratio. A different ratio changes the composition no matter what the prompt says.
 - Style, quality tags, and negative prompts are left to your own workflow.

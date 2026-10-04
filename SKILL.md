@@ -37,7 +37,7 @@ Composition is solved before model wording, so switching models or E-levels chan
 Supported targets are **Krea 2 precise**, **Qwen Image 2.1 raw/no-PE**, and **Anima**. Each needs different information density (see section 6), so the target must be known before writing.
 
 1. The user names Krea 2, Qwen Image 2.1, or Anima → use it.
-2. The user names a model outside these three, such as GPT Image, Midjourney, or Flux → this skill does not apply. Say so in one short line and handle the request without it.
+2. The user names a model outside these three, such as GPT Image, Midjourney, or Flux → say in one short line, in the user's language, that only Krea 2, Qwen Image 2.1, and Anima are supported, and stop there. Write no prompt for that model, and don't switch to one of the three on your own. Continue only after the user picks one of them.
 3. A model was already established earlier in the conversation → keep using it.
 4. No model named or established → ask the user which model to compile for before writing any prompt. Keep the question short, in the user's language, and combine it with any other blocking question (such as an ambiguous E-level) so the user answers once.
 
@@ -242,12 +242,6 @@ These are the standard terms for what E2 to E5 show. Use a term only when the E-
 - Act: `fellatio`, `sex`
 - Fluids: `cum`, `cum in mouth`, `cum drip`
 - Male anatomy: `penis`
-
-### Planned extension (not yet supported)
-
-The pipeline is built so new targets plug in without changing the SceneSpec: a new output format is a new adapter file plus a row in the routing table above. Tag-based targets (NovelAI, Stable Diffusion) are planned: Danbooru tags plus each platform's weight syntax, compiled from the same SceneSpec, in `references/nai.md` and `references/sd.md`. Anima is already supported through `references/anima.md`.
-
-Until those files exist, tell the user the mode isn't supported yet, in their language, and offer a Krea, Qwen, or Anima version instead.
 
 ## 7. Output contract
 

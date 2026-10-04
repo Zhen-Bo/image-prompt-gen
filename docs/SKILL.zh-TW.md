@@ -33,7 +33,7 @@
 支援的目標是 **Krea 2 precise**、**Qwen Image 2.1 raw/no-PE** 與 **Anima**。每個模型需要的資訊密度不同（見第 6 節），所以動筆前必須先知道目標。
 
 1. 使用者指定了 Krea 2、Qwen Image 2.1 或 Anima → 使用該模型。
-2. 使用者指定了這三個以外的模型，例如 GPT Image、Midjourney 或 Flux → 這個 Skill 不適用。用一句話說明，然後不使用此 Skill 處理請求。
+2. 使用者指定了這三個以外的模型，例如 GPT Image、Midjourney 或 Flux → 用使用者的語言、一句話說明只支援 Krea 2、Qwen Image 2.1 和 Anima，然後就停在這裡。不要替那個模型寫提示詞，也不要自行改用這三個模型之一。等使用者選了其中一個再繼續。
 3. 對話中先前已確定模型 → 沿用。
 4. 沒有指定也沒有確定模型 → 撰寫任何提示詞前，先問使用者要編譯成哪個模型。問題要簡短、用使用者的語言，並與其他會卡住的問題（例如 E 等級不明確）合併，讓使用者一次回答完。
 
@@ -238,12 +238,6 @@
 - 行為：`fellatio`、`sex`
 - 體液：`cum`、`cum in mouth`、`cum drip`
 - 男性解剖：`penis`
-
-### 規劃中的擴充（尚未支援）
-
-這個流程的設計讓新目標可以直接接上，不需要改動 SceneSpec：新的輸出格式等於一個新的轉接器檔案，加上上面路由表的一列。規劃中的是 tag 型目標（NovelAI、Stable Diffusion）：Danbooru tag 加上各平台的權重語法，從同一份 SceneSpec 編譯，檔案為 `references/nai.md` 和 `references/sd.md`。Anima 已經透過 `references/anima.md` 支援。
-
-這些檔案存在之前，用使用者的語言告訴對方這個模式尚未支援，並改為提供 Krea、Qwen 或 Anima 版本。
 
 ## 7. 輸出格式
 
