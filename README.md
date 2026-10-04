@@ -38,7 +38,7 @@ Every request becomes one internal scene description (the SceneSpec). Each model
 - **Composition first.** Every prompt states its camera in visible terms, like `framed from mid-thigh up`. Real-camera terms like focal length are left out.
 - **Consistent edits.** `same scene, Qwen` or `same scene, E2` keeps everything else fixed.
 - **Reverse prompting.** Give it an image and a format. It rebuilds the framing and pose so a different LoRA still lands the same composition.
-- **Designed characters.** When you skip the look or give only part of it, it designs the rest from anime archetypes, with materials and accessories placed where they belong.
+- **Designed characters.** When you skip the look or give only part of it, it invents the rest from who she is in the scene, with materials and accessories placed where they belong.
 - **Varied takes, minimal edits.** Ask for several versions of a theme and each one explores it with a different camera, composition, moment, or light. Edit an existing prompt and only the affected words change.
 - **LoRA controls style.** Rendering style is left to your LoRA, so prompts never add words like `masterpiece` unless you ask.
 
@@ -119,7 +119,7 @@ image-prompt-gen/
     ├── camera.md               Shot size, angles, crops, visibility gate
     ├── composition.md          Multiple subjects and story scenes
     ├── erotic-intensity.md     E0 to E5 rules
-    ├── character-looks.md      Archetypes for designed characters
+    ├── character-looks.md      Method for inventing characters
     └── reverse-prompt.md       Image to prompt
 ```
 

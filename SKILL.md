@@ -49,7 +49,7 @@ Every request is reduced to a single SceneSpec. All passes (composition, erotic 
 
 | Field | Meaning |
 |---|---|
-| `PRIMARY` | What the viewer should notice first, including the girl's look (hair, eyes, outfit, accessories) |
+| `PRIMARY` | What the viewer should notice first, including the girl's look (hair, eyes, outfit, accessories) and the one-line identity it was derived from |
 | `EVENT` | What is visibly happening, or the state being shown |
 | `SECONDARY` | Information that supports, changes, or reveals the primary event |
 | `RELATIONSHIP` | How subjects, objects, and surfaces connect (contact, gaze, cause, weight) |
@@ -102,13 +102,11 @@ Every girl gets a complete look with four parts: hair color and style, eye color
 - **Some details given** (for example only `black hair`): keep each given detail exactly as stated, and design only the missing parts to match it.
 - **A complete character prompt given** (a full description or tag set for the character): use it as given and add nothing to the look.
 
-Base designed parts on popular anime character archetypes so the generation reads as a distinct character rather than a generic default. Style words like `anime` stay out, because the LoRA handles style. How to place these features in the prompt is covered in section 5.
+Invent the designed parts rather than picking them from a list, so each scene gets its own character instead of a generic default. `references/character-looks.md` holds the method: decide who she is in this scene, derive the four parts from that, and set the first idea aside. The result should read like a named anime character, with one clear silhouette and one memorable detail. Style words like `anime` stay out, because the LoRA handles style. How to place these features in the prompt is covered in section 5.
 
-Choose a combination that fits the scene's setting, season, and mood, and vary it from request to request. `references/character-looks.md` has the archetype combinations to draw from.
+For erotic scenes, the outfit belongs to the private, adult setting and to who she is. The clothing state then follows the E-level.
 
-For erotic scenes, take the outfit from the adult setting, such as loungewear, a dress, a shirt borrowed from the partner, lingerie, or a bathrobe. The clothing state then follows the E-level.
-
-**Concept fusion.** When you design elements the user left open, such as the outfit, a prop, or a material, you may fuse two unexpected ideas into one memorable element (`a wedding veil knotted from old fishing net`, `a lantern made of frozen glass`, `a trench coat lined with pressed autumn leaves`). Use at most one or two fusions per image, and only when they serve the scene's theme. The user's own specified details are never replaced by a fusion.
+**Concept fusion.** When you design elements the user left open, such as the outfit, a prop, or a material, you may fuse two unexpected ideas into one memorable element: an ordinary object made from, lined with, or knotted out of a material that belongs to a different world, ideally one tied to her story. Use at most one or two fusions per image, and only when they serve the scene's theme. The user's own specified details are never replaced by a fusion.
 
 Record the look in the SceneSpec `PRIMARY` field so it stays identical across same-scene edits, model switches, and variants of one scene. Different themes in one batch each get their own look.
 
@@ -153,7 +151,7 @@ Every important phrase should correspond to something observable in the image. A
 - `luxurious` → large negative space, dark stone surfaces, brushed brass details, restrained warm light
 - `intimate` → close body distance, overlapping silhouettes, quiet eye contact
 
-Stacked praise adjectives (`beautiful, gorgeous, stunning`) carry less information than one concrete description (`loose black hair, relaxed shoulders, a restrained smile`), so replace them.
+Stacked praise adjectives (`beautiful, gorgeous, stunning`) carry less information than one concrete description (`loose hair falling over one shoulder, relaxed shoulders, a restrained smile`), so replace them.
 
 ### State target states positively
 
@@ -174,10 +172,10 @@ These apply to both adapters. Model-specific density lives in the adapter refere
 - **Natural prose, not tags.** This applies to Krea and Qwen. Anima uses a tag block followed by prose, as described in `references/anima.md`. Grammar carries relationships. `A girl sits on the edge of the bed, looking toward the open door while one hand grips the wrinkled sheet` says far more than `girl, bed, door, sheet, looking`.
 - **Dominant event first.** Default semantic order: primary subject → action or state → interaction → composition → camera/framing → lighting → environment → narrative or material evidence. Reorder when another order reads more clearly.
 - **Wording mirrors hierarchy.** The primary subject gets the strongest, earliest language. Secondary details get quieter phrasing (`remain quieter details deeper in the room`) rather than equal-weight inventory.
-- **Spread the look along the viewer's path.** Position in the prompt acts as implicit weight, so a block of features pasted at the start tells the model they all matter equally. Introduce the girl with one or two anchor features (usually hair color and silhouette), then attach the rest where they belong: eyes and expression with her gaze, hair movement with her pose, fabric with the body part it covers or moves with, and accessories with the hand or spot they sit on. Every feature of the look still appears once. Spreading them out only changes where each one goes.
-- **Give small details a location.** A detail without a position drifts. `a bandage` might end up on any limb or on her face, while `a small bandage across the bridge of her nose` lands where it was meant to go. Name where each small detail sits (hairpin in the left bun, pendant resting on her collarbone, tear on her lower cheek).
-- **Clothing has material.** Name each garment's material or texture (`a loose cream knit cardigan`, `a glossy black satin slip dress`, `a cotton yukata with printed morning glories`). Material tells the model how the fabric folds, shines, and reacts to light. For other objects, describe materials by behavior when they matter: linen → `irregular woven fibers, matte surface, soft creases`. Wet skin → `small reflective highlights following the curvature`.
-- **The environment has physical things in it.** When the scene has a setting, anchor it with at least three concrete objects or structures, chosen for story value as described in `references/composition.md` (`a rain-streaked window, a low shelf of paperbacks, a mug going cold on the sill`). A bare setting name like `in a bedroom` leaves the space to chance. The exceptions are a user who asks for a plain background, a minimal scene, or a transparent background, and a tight frame such as a close-up, where only the background actually visible around her is written, following the visibility gate in `references/camera.md`.
+- **Spread the look along the viewer's path.** Position in the prompt acts as implicit weight, so a block of features pasted at the start tells the model they all matter equally. Introduce the girl with one or two anchor features (usually hair color and silhouette), then attach the rest where they belong: eyes and expression with her gaze, hair movement with her pose, fabric with the body part it covers or moves with, and accessories with the hand or spot they sit on. Every feature the frame shows appears once. Spreading them out only changes where each one goes. Features the camera crops out stay in the SceneSpec rather than in the prompt, because describing them pulls the frame out to include them (see `camera.md` section 11).
+- **Give small details a location.** A detail without a position drifts. `a bandage` might end up on any limb or on her face, while `a small bandage across the bridge of her nose` lands where it was meant to go. Name where each small detail sits: which side of her hair, which finger, which part of the cheek or collar.
+- **Clothing has material.** Name each garment's material or texture along with its color and fit (`a [fit] [color] [fabric] [garment]`). Material tells the model how the fabric folds, shines, and reacts to light. For other objects, describe materials by behavior when they matter: linen → `irregular woven fibers, matte surface, soft creases`. Wet skin → `small reflective highlights following the curvature`.
+- **The environment has physical things in it.** When the scene has a setting, anchor it with at least three concrete objects or structures, chosen for story value as described in `references/composition.md` (`a rain-streaked window, a low shelf of paperbacks, a mug going cold on the sill`). Give at least one of them a job in the layout, such as a line that leads to her or a frame around her, and keep the rest out of the open area. A bare setting name like `in a bedroom` leaves the space to chance. The exceptions are a user who asks for a plain background, a minimal scene, or a transparent background, and a tight frame such as a close-up, where only the background actually visible around her is written, following the visibility gate in `references/camera.md`.
 - **Camera in visible terms.** Every prompt states its camera: the user's choice, or the best match chosen through `references/camera.md`. Write each term with what the frame literally contains (`cowboy shot, framed from mid-thigh up`). Real-camera terms such as focal length, aperture, ISO, lens types, and `bokeh` never appear, even on request. They are translated into visible framing and blur instead.
 - **E-levels stay internal.** The prompt never contains `E0`–`E5`. It contains the visible scene information that level implies.
 - **Compress last.** Remove repeated synonyms, restated actions, decorative adjectives, and details another phrase already implies. Protect who acts, who reacts, what touches what, relative position, hierarchy, and story-bearing evidence.
@@ -194,7 +192,7 @@ Before writing any prompt, read the references in two steps. Each file has a con
 | The target model's file: `references/krea.md`, `references/qwen.md`, or `references/anima.md` | Density, prompt shape, and examples. The Anima file also covers tag rules, camera tags, and weighting |
 | `references/camera.md` | Shot size, angle, viewpoint, crops, and choosing a camera when the user doesn't |
 | `references/composition.md` | Hierarchy, moments, depth, environment as evidence, and repairing a weak composition |
-| `references/character-looks.md` | Archetypes for designing the girl's look, and how to describe any outfit |
+| `references/character-looks.md` | How to invent the girl's look, and how to describe any outfit |
 
 For reverse prompting, skip `composition.md` and `character-looks.md`, because the image already decides the composition and the look.
 

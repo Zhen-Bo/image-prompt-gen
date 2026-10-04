@@ -45,7 +45,7 @@
 
 | 欄位 | 意義 |
 |---|---|
-| `PRIMARY` | 觀者第一眼應注意的東西，包含女孩的造型（髮型、眼睛、服裝、配件） |
+| `PRIMARY` | 觀者第一眼應注意的東西，包含女孩的造型（髮型、眼睛、服裝、配件），以及推導出造型的那一句身分描述 |
 | `EVENT` | 畫面上正在發生的事，或所呈現的狀態 |
 | `SECONDARY` | 支撐、改變或揭示主要事件的資訊 |
 | `RELATIONSHIP` | 主體、物件與表面之間如何連結（接觸、視線、因果、重量） |
@@ -98,13 +98,11 @@
 - **只給了部分細節**（例如只說 `black hair`）：使用者給的細節照原樣保留，只設計缺少的部分，並且要跟已給的細節搭配。
 - **給了一套完整的人物提示詞**（完整的角色描述或標籤組）：直接照用，造型不再添加任何東西。
 
-設計的部分以流行的動漫角色原型為基礎，讓生成結果像一個鮮明的角色，而不是普通的預設臉。`anime` 這類畫風詞不要加，因為畫風由 LoRA 處理。這些特徵在提示詞中如何擺放，見第 5 節。
+需要設計的部分要自己發想，不要從清單挑選，讓每個場景都有自己的角色，而不是普通的預設臉。方法在 `references/character-looks.md`：先決定她在這個場景裡是誰，從這句身分推導出四個部分，並且放下第一個想到的點子。結果要像一個有名字的動漫角色：一個鮮明的輪廓，加一個讓人記得的細節。`anime` 這類畫風詞不要加，因為畫風由 LoRA 處理。這些特徵在提示詞中如何擺放，見第 5 節。
 
-選擇符合場景地點、季節與氛圍的組合，並且每次請求都要變化。`references/character-looks.md` 有可以取用的原型組合。
+色情場景的服裝屬於私密的成人情境，也要符合她的身分。服裝狀態再依 E 等級決定。
 
-色情場景的服裝取自成人情境，例如居家服、洋裝、借穿伴侶的襯衫、內衣或浴袍。服裝狀態再依 E 等級決定。
-
-**概念融合。** 設計使用者沒指定的元素時（服裝、道具、材質），可以把兩個意想不到的概念融合成一個令人印象深刻的元素（`a wedding veil knotted from old fishing net`、`a lantern made of frozen glass`、`a trench coat lined with pressed autumn leaves`）。每張圖最多一到兩個融合，而且只在符合場景主題時使用。使用者自己指定的細節永遠不會被融合取代。
+**概念融合。** 設計使用者沒指定的元素時（服裝、道具、材質），可以把兩個意想不到的概念融合成一個令人印象深刻的元素：一個普通的物件，用來自另一個世界的材料製成、襯裡或編成，最好跟她的故事有關。每張圖最多一到兩個融合，而且只在符合場景主題時使用。使用者自己指定的細節永遠不會被融合取代。
 
 把造型記錄在 SceneSpec 的 `PRIMARY` 欄位，讓它在同場景修改、換模型與同場景變體中保持一致。同一批中的不同主題各自有自己的造型。
 
@@ -149,7 +147,7 @@
 - `luxurious` → 大量留白、深色石材表面、拉絲黃銅細節、克制的暖光
 - `intimate` → 身體距離很近、輪廓重疊、安靜的眼神交流
 
-堆疊的讚美形容詞（`beautiful, gorgeous, stunning`）資訊量不如一個具體描述（`loose black hair, relaxed shoulders, a restrained smile`），所以要替換掉。
+堆疊的讚美形容詞（`beautiful, gorgeous, stunning`）資訊量不如一個具體描述（`loose hair falling over one shoulder, relaxed shoulders, a restrained smile`），所以要替換掉。
 
 ### 用正面方式描述目標狀態
 
@@ -170,10 +168,10 @@
 - **自然語句，不是 tag。** 適用於 Krea 和 Qwen。Anima 使用 tag 區塊加上一段敘述，見 `references/anima.md`。語法承載了關係。`A girl sits on the edge of the bed, looking toward the open door while one hand grips the wrinkled sheet` 比 `girl, bed, door, sheet, looking` 傳達的多得多。
 - **主要事件優先。** 預設語意順序：主要主體 → 動作或狀態 → 互動 → 構圖 → 鏡頭與取景 → 光線 → 環境 → 敘事或材質痕跡。其他順序讀起來更清楚時可以調整。
 - **用詞反映層級。** 主要主體用最強、最早的語言。次要細節用較安靜的措辭（`remain quieter details deeper in the room`），而不是同等份量的清單。
-- **把造型沿著觀者的視線分散。** 在提示詞中的位置本身就是隱性權重，所以在開頭貼一整塊特徵，等於告訴模型它們一樣重要。先用一到兩個錨點特徵介紹女孩（通常是髮色與輪廓），其餘特徵放在該出現的地方：眼睛與表情跟著她的視線，頭髮擺動跟著姿勢，布料跟著它覆蓋或一起移動的身體部位，配件跟著它所在的手或位置。每個造型特徵仍然出現一次，分散只是改變每個特徵放的位置。
-- **小細節要有位置。** 沒有位置的細節會漂移。`a bandage` 可能跑到任何肢體或臉上，而 `a small bandage across the bridge of her nose` 會落在預期的地方。寫出每個小細節的位置（左側髮髻上的髮夾、落在鎖骨上的墜飾、下臉頰的淚痕）。
-- **服裝要有材質。** 寫出每件衣物的材質或質地（`a loose cream knit cardigan`、`a glossy black satin slip dress`、`a cotton yukata with printed morning glories`）。材質告訴模型布料怎麼摺、怎麼反光、怎麼對光線反應。其他物件的材質在重要時用行為描述：亞麻 → `irregular woven fibers, matte surface, soft creases`，濕潤皮膚 → `small reflective highlights following the curvature`。
-- **環境裡要有實體。** 場景有地點時，至少用三個具體物件或結構撐起空間，依 `references/composition.md` 挑選有故事價值的物件（`a rain-streaked window, a low shelf of paperbacks, a mug going cold on the sill`）。只寫 `in a bedroom` 這樣的地點名稱，空間就交給運氣。例外有兩種：使用者要求素色背景、極簡場景或透明背景，以及特寫這類緊的鏡頭。緊的鏡頭只寫她周圍實際看得到的背景，依照 `references/camera.md` 的可見性檢查。
+- **把造型沿著觀者的視線分散。** 在提示詞中的位置本身就是隱性權重，所以在開頭貼一整塊特徵，等於告訴模型它們一樣重要。先用一到兩個錨點特徵介紹女孩（通常是髮色與輪廓），其餘特徵放在該出現的地方：眼睛與表情跟著她的視線，頭髮擺動跟著姿勢，布料跟著它覆蓋或一起移動的身體部位，配件跟著它所在的手或位置。畫面看得到的每個造型特徵出現一次，分散只是改變每個特徵放的位置。被鏡頭切掉的特徵留在 SceneSpec 裡，不寫進提示詞，因為描述它們會把鏡頭拉遠來容納它們（見 `camera.md` 第 11 節）。
+- **小細節要有位置。** 沒有位置的細節會漂移。`a bandage` 可能跑到任何肢體或臉上，而 `a small bandage across the bridge of her nose` 會落在預期的地方。寫出每個小細節的位置：頭髮的哪一側、哪根手指、臉頰或領口的哪個部位。
+- **服裝要有材質。** 寫出每件衣物的材質或質地，連同顏色與合身程度（`a [fit] [color] [fabric] [garment]`）。材質告訴模型布料怎麼摺、怎麼反光、怎麼對光線反應。其他物件的材質在重要時用行為描述：亞麻 → `irregular woven fibers, matte surface, soft creases`，濕潤皮膚 → `small reflective highlights following the curvature`。
+- **環境裡要有實體。** 場景有地點時，至少用三個具體物件或結構撐起空間，依 `references/composition.md` 挑選有故事價值的物件（`a rain-streaked window, a low shelf of paperbacks, a mug going cold on the sill`）。其中至少一個要在版面上負責工作，例如一條引向她的線，或一個框住她的框，其他物件則不要放進留白區域。只寫 `in a bedroom` 這樣的地點名稱，空間就交給運氣。例外有兩種：使用者要求素色背景、極簡場景或透明背景，以及特寫這類緊的鏡頭。緊的鏡頭只寫她周圍實際看得到的背景，依照 `references/camera.md` 的可見性檢查。
 - **鏡頭用可見的方式寫。** 每個提示詞都要交代鏡頭：使用者指定的，或透過 `references/camera.md` 選出最合適的。每個術語都附上畫面實際包含什麼（`cowboy shot, framed from mid-thigh up`）。焦距、光圈、ISO、鏡頭類型與 `bokeh` 等真實相機術語永遠不出現，即使使用者要求也一樣，而是轉譯成可見的取景與模糊。
 - **E 等級留在內部。** 提示詞中永遠不會出現 `E0` 到 `E5`，只會出現該等級代表的可見場景資訊。
 - **最後才壓縮。** 刪掉重複的同義詞、重述的動作、裝飾性形容詞，以及其他詞組已經隱含的細節。要保護的是：誰在動作、誰在反應、什麼碰到什麼、相對位置、層級，以及承載故事的痕跡。
@@ -190,7 +188,7 @@
 | 目標模型的檔案：`references/krea.md`、`references/qwen.md` 或 `references/anima.md` | 密度、提示詞形式與範例。Anima 檔案另外包含 tag 規則、鏡頭 tag 與權重 |
 | `references/camera.md` | 景別、角度、視角、裁切，以及使用者沒指定時如何選鏡頭 |
 | `references/composition.md` | 層次、時間點、景深、環境作為證據，以及修補薄弱的構圖 |
-| `references/character-looks.md` | 設計女孩造型用的原型，以及如何描述任何服裝 |
+| `references/character-looks.md` | 如何發想女孩的造型，以及如何描述任何服裝 |
 
 反推時跳過 `composition.md` 和 `character-looks.md`，因為構圖和造型已經由圖片決定。
 
