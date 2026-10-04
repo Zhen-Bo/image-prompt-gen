@@ -279,7 +279,7 @@ Example prompts live in each adapter file (`references/krea.md` section 5, `refe
 
 Before returning, silently confirm:
 
-- The user's required content is present, and the image shows an event rather than an inventory.
+- The user's required content is present, and the image shows an event rather than an inventory. When a camera you chose crops out something the user specified, change the camera.
 - The primary subject reads first. Secondary information supports or reinterprets it at lower emphasis.
 - Positions, contact, and weight are physically coherent. Multiple characters read as one interaction.
 - Female subjects use `girl`, no age terms appear, and no unrequested style terms were added.
