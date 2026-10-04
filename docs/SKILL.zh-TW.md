@@ -181,20 +181,25 @@
 
 ## 6. 參考檔路由
 
-只讀請求需要的檔案。每個檔案開頭都有目錄。
+撰寫任何提示詞前，分兩步讀取參考檔。每個檔案開頭都有目錄。
+
+**第一步：每次必讀。**
+
+| 讀取 | 內容 |
+|---|---|
+| 目標模型的檔案：`references/krea.md`、`references/qwen.md` 或 `references/anima.md` | 密度、提示詞形式與範例。Anima 檔案另外包含 tag 規則、鏡頭 tag 與權重 |
+| `references/camera.md` | 景別、角度、視角、裁切，以及使用者沒指定時如何選鏡頭 |
+| `references/composition.md` | 層次、時間點、景深、環境作為證據，以及修補薄弱的構圖 |
+| `references/character-looks.md` | 設計女孩造型用的原型，以及如何描述任何服裝 |
+
+反推時跳過 `composition.md` 和 `character-looks.md`，因為構圖和造型已經由圖片決定。
+
+**第二步：符合條件才讀。**
 
 | 讀取 | 時機 |
 |---|---|
-| `references/krea.md` | 每個 Krea 2 提示詞（密度、提示詞形式、範例） |
-| `references/qwen.md` | 每個 Qwen Image 2.1 raw 提示詞（密度、空間語言、範例） |
-| `references/anima.md` | 每個 Anima 提示詞（tag 規則與順序、安全 tag、鏡頭 tag、權重） |
-| `references/camera.md` | 每個提示詞（景別、角度、視角、裁切、使用者沒指定時如何選鏡頭） |
-| `references/composition.md` | 多個主體、主要加次要主題、故事文字、複雜環境、構圖或時間點變體，或容易變成物件清單的場景 |
 | `references/erotic-intensity.md` | 任何色情內容、E 等級請求，或同場景的 E 等級變更 |
-| `references/character-looks.md` | 使用者和先前對話沒有指定女孩造型的部分或全部，而且沒有給完整的人物提示詞時（反推不使用） |
-| `references/reverse-prompt.md` | 使用者提供圖片要反推成提示詞，以重現其構圖時 |
-
-簡單的單一主體場景通常只需要轉接器檔案和 `camera.md`。
+| `references/reverse-prompt.md` | 使用者提供圖片要反推成提示詞 |
 
 ### 色情強度等級
 

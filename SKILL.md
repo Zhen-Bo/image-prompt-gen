@@ -185,20 +185,25 @@ These apply to both adapters. Model-specific density lives in the adapter refere
 
 ## 6. Reference routing
 
-Read only what the request needs. Each file has a contents list at the top.
+Before writing any prompt, read the references in two steps. Each file has a contents list at the top.
+
+**Step 1: always read these.**
+
+| Read | Covers |
+|---|---|
+| The target model's file: `references/krea.md`, `references/qwen.md`, or `references/anima.md` | Density, prompt shape, and examples. The Anima file also covers tag rules, camera tags, and weighting |
+| `references/camera.md` | Shot size, angle, viewpoint, crops, and choosing a camera when the user doesn't |
+| `references/composition.md` | Hierarchy, moments, depth, environment as evidence, and repairing a weak composition |
+| `references/character-looks.md` | Archetypes for designing the girl's look, and how to describe any outfit |
+
+For reverse prompting, skip `composition.md` and `character-looks.md`, because the image already decides the composition and the look.
+
+**Step 2: read these when they apply.**
 
 | Read | When |
 |---|---|
-| `references/krea.md` | Every Krea 2 prompt (density, prompt shape, examples) |
-| `references/qwen.md` | Every Qwen Image 2.1 raw prompt (density, spatial language, examples) |
-| `references/anima.md` | Every Anima prompt (tag rules and order, safety tag, camera tags, weighting) |
-| `references/camera.md` | Every prompt (shot size, angle, viewpoint, crops, choosing a camera when the user doesn't) |
-| `references/composition.md` | Multiple subjects, primary + secondary themes, story text, complex environments, composition or moment variants, or a scene that risks becoming an object list |
 | `references/erotic-intensity.md` | Any erotic content, an E-level request, or a same-scene E-level change |
-| `references/character-looks.md` | Part or all of the girl's look is left open by the user and earlier conversation, and no complete character prompt was given (not for reverse prompting) |
-| `references/reverse-prompt.md` | The user gives an image to reverse into a prompt, to recreate its composition |
-
-A simple single-subject scene usually needs only the adapter file and `camera.md`.
+| `references/reverse-prompt.md` | The user gives an image to reverse into a prompt |
 
 ### Erotic-intensity levels
 

@@ -1,6 +1,6 @@
 # Character Looks
 
-Read this when part or all of the girl's look is left open. The rules for when and how to design a look are in `SKILL.md` ("Designing the girl's look"). This file only holds material to draw from.
+Read this before every prompt except reverse prompting. The rules for when and how to design a look are in `SKILL.md` ("Designing the girl's look"). This file holds archetypes to draw from and the way to describe any outfit, including one the user specified.
 
 ## How to use
 
