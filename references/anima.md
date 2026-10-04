@@ -19,14 +19,21 @@ Compiles a finished SceneSpec into a prompt for CircleStone Labs' Anima. Anima w
 ```
 [tag block, comma-separated, ending with a period]
 
-[natural language: one paragraph, two or more sentences]
+[natural language: one paragraph in four parts]
 ```
 
-The tag block comes first and the sentences follow. Anima accepts any order, but this split keeps the anchors and the relationships apart. There is no word limit. The natural-language part is exactly one paragraph with no blank lines inside it, so the whole prompt is one tag block plus one paragraph. Make it complete, with at least two sentences: the first covers subject, appearance, clothing, and action, and the second covers spatial relationships, camera, environment, and light.
+The tag block comes first and the sentences follow. Anima accepts any order, but this split keeps the anchors and the relationships apart. The natural-language part is exactly one paragraph with no blank lines inside it, so the whole prompt is one tag block plus one paragraph. Write the paragraph in four parts, in this order, giving each part one or two sentences:
+
+1. **Her and the action**: her hair, eyes, and expression, and what she is doing.
+2. **Clothing and contact**: each garment with its material and current state, each accessory where it sits, and what her hands and body hold or press against.
+3. **Camera and layout**: the shot and camera position, where she sits in the frame, the open area, and what leads the eye to her. Booru tags have no reliable way to place a subject, so the layout lives here.
+4. **Light and evidence**: where the light comes from and what it falls on, the environment objects that matter, and the traces that tell the story.
+
+There is no word limit, and length follows the scene. Never drop visible information to make the paragraph shorter. A part with nothing to say for this image may be brief, but keep the order.
 
 ## 2. Tag rules
 
-- Lowercase, with spaces instead of underscores: `black hair`, `looking at viewer`, `hand on another's head`.
+- Lowercase, with spaces instead of underscores: `long hair`, `looking at viewer`, `hand on another's head`.
 - Use booru-style tags that actually exist. When Danbooru and Gelbooru name the same concept differently, prefer the Gelbooru form.
 - A concept with no real tag goes in the sentences. Don't invent tag-shaped phrases like `gold flecked iris` or `head bowed slightly`.
 - Anima was trained with random tag dropout, so the block doesn't need every visible concept. Aim for roughly 15 to 35 tags that anchor the image.
@@ -45,9 +52,9 @@ Follow Anima's section order. Order within a section doesn't matter, so a tag's 
 
 **Sentences carry everything relational or fine-grained:** who does what to whom, what covers what, where she looks, where each person or object sits in the frame, the exposed and covered split for a half-covered style, materials and how they behave, the narrative evidence, and how the light falls.
 
-Don't restate the whole tag block in the sentences. The sentences add what the tags can't say. A tag like `seiza` plus a sentence like `She kneels in seiza beside the low table, pouring tea with her gaze lowered` is the right division.
+The sentences may mention a tagged feature again, and when they do, they add what the tag can't say: its material, color, position, and state. Don't copy the tag block into the sentences as a bare list. A tag like `seiza` plus a sentence like `She kneels in seiza beside the low table, pouring tea with her gaze lowered` is the right division.
 
-**Multiple people:** attribute appearance in the sentences (`the girl with silver hair stands on the left`), because a flat tag list can't say which trait belongs to whom.
+**Multiple people:** attribute appearance in the sentences (`the girl with [her hair] stands on the left`), because a flat tag list can't say which trait belongs to whom.
 
 ## 5. Subject tokens
 
@@ -90,10 +97,12 @@ Anima supports numeric weights in ComfyUI, `(concept:1.6)`, and needs larger val
 
 ## 9. Example
 
-SceneSpec: a girl kneels in seiza pouring tea in a lantern-lit tatami room, E0, eye-level front view, framed from the waist up.
+SceneSpec: a girl kneels in seiza pouring tea in a lantern-lit tatami room, E0, eye-level front view, framed from the waist up. Identity line: a tea-house apprentice serving the last guest of the night, wearing her late grandmother's jade earrings. Layout: she sits in the right third, the table edge leads from the lower left corner to her hands, and the dim room stays open on the left.
 
 ```
-1girl, solo, black hair, hime cut, blunt bangs, sidelocks, green eyes, jade earrings, kimono, seiza, holding teapot, tatami, low table, paper lantern, indoors, upper body, facing viewer, warm lighting.
+1girl, solo, black hair, hime cut, blunt bangs, sidelocks, green eyes, jade earrings, kimono, obi, seiza, holding teapot, cup, tatami, low table, paper lantern, indoors, upper body, facing viewer, warm lighting.
 
-A girl with straight black hair cut in a neat hime style kneels in seiza behind a low lacquered table, tilting a ceramic teapot as a thin stream of tea fills the cup in front of her, her green eyes lowered to the pour. An eye-level front view framed from the waist up keeps her centered, with a paper lantern glowing on the tatami to her left, casting warm amber light across her face and hands while steam curls from the cup into the dim room.
+A girl with straight black hair cut in a neat hime style kneels in seiza behind a low lacquered table, tilting a ceramic teapot as a thin stream of tea fills the cup in front of her, her green eyes lowered to the pour with quiet concentration. Her deep indigo silk kimono is tied with a pale gold obi, her left hand holds the wide sleeve back so it clears the cup, and a pair of old jade drop earrings hang still beside her jaw. An eye-level front view framed from the waist up places her in the right third of the frame, the long edge of the table running from the lower left corner to her hands, while the left side of the frame stays dim and open. A paper lantern on the tatami near the right edge casts warm amber light across her face, her hands, and the steam that curls into the dark open space, and a second cup waits untouched at the far end of the table.
 ```
+
+The four parts appear in order: her and the pour, the kimono and earrings with her sleeve-holding hand, the camera and layout, then the lantern light and the waiting cup.
