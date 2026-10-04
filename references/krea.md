@@ -78,10 +78,10 @@ A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsil
 A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill with one knee drawn up, the long sleeve of her oversized gray fleece hoodie covering the dark phone beside her hand. Her blue eyes follow the rain-covered street below, and over-ear headphones rest around her neck. An eye-level shot framed from the waist up keeps the cold mug and a low shelf of paperbacks in the dim room behind her, while cool window light outlines her face.
 
 2. The moment the phone lights up
-A girl with a short platinum-blonde bob turns sharply on a wide wooden windowsill toward the phone lighting up beside her hand, her drawn-up knee dropping and the hoodie sleeve sliding back from her wrist as she reaches for it. In a close-up, the face filling most of the frame, the screen's glow catches her widening blue eyes and the headphones around her neck. Rain streaks the window behind her, and the mug and bookshelf stay dark in the room.
+A girl with a short platinum-blonde bob turns her head sharply toward a sudden cold glow rising from below the frame, the screen light catching her widening blue eyes. In a close-up, the face filling most of the frame, the band of her over-ear headphones shows along the bottom edge where they rest around her neck. Rain streaks the dark window behind her head, and the shadowed edge of a bookshelf shows on the other side.
 
 3. After waiting: the rain has stopped
-A girl with a short platinum-blonde bob sleeps curled against the window frame on a wide wooden windowsill, her cheek pressed into the gray fleece of her hoodie sleeve and the dark phone loose in her open hand. The headphones have slipped to her collarbone. A high-angle view looks down on her from above the room, and the rain has stopped, and pale early light rests on the wet glass, the empty street below, and the cold mug still on the sill.
+A girl with a short platinum-blonde bob sleeps curled against the window frame on a wide wooden windowsill, her cheek pressed into the gray fleece of her hoodie sleeve and the dark phone loose in her open hand. The headphones have slipped to her collarbone. A high-angle full-body shot looks down on her from above the room, her whole curled figure and the sill inside the frame. The rain has stopped, and pale early light rests on the wet glass, the empty street below, and the cold mug still on the sill.
 
 ## 6. Compression pass
 
