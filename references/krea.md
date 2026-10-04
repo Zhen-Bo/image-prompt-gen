@@ -44,7 +44,7 @@ The result reads as one paragraph of natural prose.
 
 ## 4. Density by dimension
 
-- **Camera.** Always include the camera from `camera.md`, written as a term plus its visible boundary: `cowboy shot, framed from mid-thigh up, low camera looking slightly upward`. Add spatial detail when a relationship depends on it: `a wide view keeps both figures and the doorway visible, with the girl dominant in the foreground`.
+- **Camera and layout.** Always include the camera from `camera.md`, written as a term plus its visible boundary, and her placement from the layout: `cowboy shot, framed from mid-thigh up, low camera looking slightly upward, she stands in the left third with open sky behind her on the right`. Nothing in precise mode adds a layout, so a prompt without placement usually comes out centered. Add spatial detail when a relationship depends on it: `a wide view keeps both figures and the doorway visible, with the girl dominant in the foreground`.
 - **Lighting.** One coherent logic that supports hierarchy: `Soft side light from the window catches her face and hands while the room stays dimmer.`
 - **Environment.** Keep objects by narrative value. `an open suitcase beside the doorway` earns its place when it implies departure. A decorative vase with no role does not.
 - **Materials.** Include behavior only when it affects contact, light, or consequence: `The wrinkled sheet compresses beneath her supporting hand` when the hand's weight matters.
@@ -55,33 +55,33 @@ The result reads as one paragraph of natural prose.
 
 **Simple scene.** Input: `girl beside an open window, looking at the rainy street`
 
-A girl sits sideways beside an open window with one knee drawn up, looking down toward the rain-covered street, seen in an eye-level side view framed from the knees up, soft window light outlining her face and hands against the dim room.
+A girl sits sideways beside an open window with one knee drawn up, looking down toward the rain-covered street. An eye-level side view framed from the knees up places her in the left third of the frame, facing right into the open window and the gray street that fill the rest of the image, soft window light outlining her face and hands against the dim room.
 
-**Narrative scene.** SceneSpec: girl on the bed edge (primary), turning toward the doorway, open suitcase and coat on the floor (evidence), side window light.
+**Narrative scene.** SceneSpec: girl on the bed edge (primary), turning toward the doorway, open suitcase and coat on the floor (evidence), side window light. Layout: she sits in the left third, and the bed and her gaze lead right to the door.
 
-A girl sits on the edge of an unmade bed, turning toward the half-open door while one hand grips the wrinkled sheet. A wide shot at eye level shows her full body dominating the foreground, while an open suitcase and a coat on the floor remain quieter details deeper in the room. Soft side light catches her face and hands while the doorway falls into shadow.
+A girl sits on the edge of an unmade bed, turning toward the half-open door while one hand grips the wrinkled sheet. A wide shot at eye level places her full body in the left third of the foreground, the length of the bed running from her toward the door on the right, where an open suitcase and a coat on the floor remain quieter details deeper in the room. Soft side light catches her face and hands while the doorway falls into shadow.
 
 **Multiple characters.**
 
-A girl leans backward against the edge of a table as the second figure moves close from her left, their bodies forming one diagonal shape across the foreground in a two-shot framed from mid-thigh up. One hand braces against the tabletop while her head turns toward the other figure. A narrow side light separates their overlapping silhouettes from the darker room.
+A girl leans backward against the edge of a table as the second figure moves close from her left, their bodies forming one diagonal from the lower left corner toward the upper right in a two-shot framed from mid-thigh up. One hand braces against the tabletop while her head turns toward the other figure. A narrow side light separates their overlapping silhouettes from the darker room.
 
-**Designed look, single prompt.** The user gave no appearance details in the next two examples, so the girl's look comes from `references/character-looks.md` and stays the same in every version. The look is spread through each prompt: the hair and silhouette introduce her, the headphones sit at her neck, the hoodie sleeve moves with her hand, and her eyes appear with her gaze.
+**Designed look, single prompt.** The user gave no appearance details in the next two examples, so the girl's look was invented with the method in `references/character-looks.md`, from the identity line `a bassist waiting for a call from the bandmate who quit`, and stays the same in every version. The headphones and the dark phone come from that line. The look belongs to this scene only. The look is spread through each prompt: the hair and silhouette introduce her, the headphones sit at her neck, the hoodie sleeve moves with her hand, and her eyes appear with her gaze.
 
 Input: `A girl sits by the window watching the rain, like she's waiting for someone`
 
 Output:
-A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill, one knee drawn up and her chin resting on it, the hem of her oversized gray fleece hoodie bunched around her hips. Her blue eyes follow the rain-covered street below, while her phone lies face-up and dark on the sill beside her hand, half hidden under the long hoodie sleeve. Over-ear headphones rest silent around her neck. An eye-level three-quarter front view, framed from the waist up, keeps her and the tall rain-streaked window together, with a mug going cold on the sill and a low shelf of paperbacks behind her. Cool light from the window outlines her face, hair and fingers, while the room behind her stays dim.
+A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill, one knee drawn up and her chin resting on it, the hem of her oversized gray fleece hoodie bunched around her hips. Her blue eyes follow the rain-covered street below, while her phone lies face-up and dark on the sill beside her hand, half hidden under the long hoodie sleeve. Over-ear headphones rest silent around her neck. An eye-level three-quarter front view, framed from the waist up, places her in the right third of the frame, facing the tall rain-streaked window that fills the left two-thirds, the sill running from her knee toward the glass with a mug going cold on it and a low shelf of paperbacks dim behind her. Cool light from the window outlines her face, hair and fingers, while the room behind her stays dim.
 
 **Several versions** (`give me three versions at different moments`)
 
 1. Waiting: the phone stays dark
-A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill with one knee drawn up, the long sleeve of her oversized gray fleece hoodie covering the dark phone beside her hand. Her blue eyes follow the rain-covered street below, and over-ear headphones rest around her neck. An eye-level shot framed from the waist up keeps the cold mug and a low shelf of paperbacks in the dim room behind her, while cool window light outlines her face.
+A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill with one knee drawn up, the long sleeve of her oversized gray fleece hoodie covering the dark phone beside her hand. Her blue eyes follow the rain-covered street below, and over-ear headphones rest around her neck. An eye-level shot framed from the waist up places her in the right third, facing the bright window on the left, with the cold mug on the sill and a low shelf of paperbacks in the dim room behind her, while cool window light outlines her face.
 
 2. The moment the phone lights up
-A girl with a short platinum-blonde bob turns sharply on a wide wooden windowsill toward the phone lighting up beside her hand, her drawn-up knee dropping and the hoodie sleeve sliding back from her wrist as she reaches for it. In a close-up, the face filling most of the frame, the screen's glow catches her widening blue eyes and the headphones around her neck. Rain streaks the window behind her, and the mug and bookshelf stay dark in the room.
+A girl with a short platinum-blonde bob turns her head sharply toward a sudden cold glow rising from below the right edge of the frame, the screen light catching her widening blue eyes. In a close-up, her face fills the left half of the frame with the top of her head cropped by the upper edge, and the band of her over-ear headphones shows along the bottom edge where they rest around her neck. Rain streaks the dark window in the open right half, and the shadowed edge of a bookshelf shows behind her.
 
 3. After waiting: the rain has stopped
-A girl with a short platinum-blonde bob sleeps curled against the window frame on a wide wooden windowsill, her cheek pressed into the gray fleece of her hoodie sleeve and the dark phone loose in her open hand. The headphones have slipped to her collarbone. A high-angle view looks down on her from above the room, and the rain has stopped, and pale early light rests on the wet glass, the empty street below, and the cold mug still on the sill.
+A girl with a short platinum-blonde bob sleeps curled against the window frame on a wide wooden windowsill, her cheek pressed into the gray fleece of her hoodie sleeve and the dark phone loose in her open hand. The headphones have slipped to her collarbone. A high-angle full-body shot looks down from above the room, her curled figure small in the lower left, the long empty sill and the wet glass stretching across the rest of the frame. The rain has stopped, and pale early light rests on the glass, the empty street below, and the cold mug at the far end of the sill.
 
 ## 6. Compression pass
 

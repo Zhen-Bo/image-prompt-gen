@@ -20,15 +20,16 @@ This pass fills the SceneSpec `CAMERA` field. Every prompt gets a camera decisio
 
 Decide the camera from what the image must show, in this order:
 
-1. **What must be visible?** Identify the body parts and objects the event depends on, then choose the tightest shot that contains all of them:
+1. **What must be visible?** Identify the body parts and objects the event depends on. The frame must contain these, and the rest of her may fall outside it:
    - The event is a face or expression → close-up or medium close-up
    - Hands, a held object, or touch between people → upper body (waist up) or cowboy shot
    - Stance, a gesture involving the hips, or two people's body distance → cowboy shot or knee shot
    - The whole pose, the full outfit, or where she stands → full body
    - The place tells the story (isolation, scale, a room's evidence) → wide or very wide shot
-2. **What is the emotion or power relation?** Pick the height and angle from section 9: eye level for neutral or everyday scenes, low angle for strength or threat, high angle for vulnerability, a Dutch angle for unease.
-3. **Whose view is it?** Use an external camera by default. Consider POV when a boy is the girl's partner and the image should center entirely on her (section 8).
-4. **One choice per slot.** Pick one shot size, one height, one orientation, and at most one viewpoint relation.
+2. **What does the layout need?** Fit the shot to the layout from `composition.md` section 2. Pull back when the layout needs open space around her, or move in and let the frame cut her when it needs closeness. The frame doesn't have to hug her outline.
+3. **What is the emotion or power relation?** Pick the height and angle from section 9: eye level for neutral or everyday scenes, low angle for strength or threat, high angle for vulnerability, a Dutch angle for unease.
+4. **Whose view is it?** Use an external camera by default. Consider POV when a boy is the girl's partner and the image should center entirely on her (section 8).
+5. **One choice per slot.** Pick one shot size, one placement, one height, one orientation, and at most one viewpoint relation.
 
 Prefer the less obvious choice when it serves the scene better. A waiting scene might use a high-angle wide shot with negative space instead of a default eye-level medium shot. Record the choice in the SceneSpec so it stays fixed across same-scene edits.
 
@@ -38,9 +39,11 @@ Neither target model has a verified vocabulary of film jargon. A bare term like 
 
 `cowboy shot, framed from mid-thigh up, both feet outside the frame`
 
-The visible part is what actually steers the model. The term is optional support. Build the camera from up to five slots and include only the ones this image needs:
+The visible part is what actually steers the model. The term is optional support. Build the camera from up to six slots. Placement is always included, and the rest only when this image needs them:
 
-`[shot size + visible boundary], [camera height/direction], [subject orientation], [viewpoint relation], [crop or visibility constraints]`
+`[shot size + visible boundary], [placement in the frame], [camera height/direction], [subject orientation], [viewpoint relation], [crop or visibility constraints]`
+
+Placement comes from the layout in `composition.md` section 2: where she sits, how much of the frame she takes up, and what fills the rest (`framed from the waist up, she sits in the right third of the frame with the bright window filling the left`).
 
 Keep camera position and the subject's gaze separate. `seen from behind, her head turned back toward the camera` is coherent. `seen from behind, facing the viewer` fights itself.
 
@@ -114,10 +117,8 @@ Describe a crop as a deliberate framing choice, never as something missing. `mis
 | Extreme crop (極端裁切) | `extreme crop, the frame cuts through her face so only her lips and chin remain visible` |
 | Foreground occlusion (前景遮擋) | `a sheer curtain in the near foreground partly covers the left edge of the frame` |
 | Frame within a frame (框中框) | `she stands inside the doorway, the dark doorframe enclosing her on all four sides` |
-| Negative space (留白) | `she occupies a small area in the lower left, leaving large empty space across the right half` |
-| Diagonal (對角線) | `the line of her body runs diagonally from the lower left corner toward the upper right` |
 
-Always say *where*: which edge, which side, and which part is kept.
+Always say *where*: which edge, which side, and which part is kept. Open space, diagonals, and other layouts are in `composition.md` section 2.
 
 ## 8. Two-person and intimate framing
 
@@ -159,7 +160,6 @@ These are common associations, not fixed formulas. The same emotion can be reach
 | Over-the-shoulder | Conversation and relationship between two people |
 | Peeking / foreground occlusion | Secrecy, the forbidden, being hidden |
 | Frame within a frame | Focus, confinement, inside versus outside |
-| Negative space | Loneliness, waiting, calm, fragility |
 
 ## 10. Real-camera terms are filtered out
 
@@ -177,6 +177,7 @@ Plain visible descriptions of blur or focus are allowed, because they describe w
 ## 11. Conflicts and lint rules
 
 - **One value per slot.** Watch for `close-up` with `full body`, `bird's-eye` with `eye level`, and `front view` with `from behind`.
+- **Placement is stated.** Every prompt says where she sits in the frame and what fills the rest. Even in a close-up, say which side her face takes and what shows beside it. A prompt without placement usually comes out centered.
 - **Visibility gate: write only what this frame, angle, and pose actually show.** Settle the camera first, then check every element against three questions. Is it inside the frame? Does it face the camera from this angle? Does something block it, such as her own limbs, hair, a prop, or another person? If any answer is no, leave the element out. Examples of what the angle hides:
   - From behind: her face, nipples, and pussy are hidden unless she turns or bends to show them. Her back, buttocks, and the nape of her neck are what the camera sees.
   - Side or profile view: only the near breast shows in profile, and a kneeling, sitting, or crossed-leg pose usually hides her pussy behind her thigh.

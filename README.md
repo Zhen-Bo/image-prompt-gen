@@ -38,8 +38,8 @@ Every request becomes one internal scene description (the SceneSpec). Each model
 - **Composition first.** Every prompt states its camera in visible terms, like `framed from mid-thigh up`. Real-camera terms like focal length are left out.
 - **Consistent edits.** `same scene, Qwen` or `same scene, E2` keeps everything else fixed.
 - **Reverse prompting.** Give it an image and a format. It rebuilds the framing and pose so a different LoRA still lands the same composition.
-- **Designed characters.** When you skip the look, it designs one from anime archetypes, with materials and accessories placed where they belong.
-- **Fair variants.** Ask for several versions and it varies one dimension at a time, so you can compare them.
+- **Designed characters.** When you skip the look or give only part of it, it invents the rest from who she is in the scene, with materials and accessories placed where they belong.
+- **Varied takes, minimal edits.** Ask for several versions of a theme and each one explores it with a different camera, composition, moment, or light. Edit an existing prompt and only the affected words change.
 - **LoRA controls style.** Rendering style is left to your LoRA, so prompts never add words like `masterpiece` unless you ask.
 
 ## Installation
@@ -78,7 +78,7 @@ hoodie bunched around her hips. Her blue eyes follow the rain-covered street bel
 | `same scene, Anima` | The same scene, written for another model |
 | `same scene, E2` | The same scene at a new intensity level |
 | `make it night` | Changes only what you named |
-| `three versions at different moments` | Three versions that differ in one dimension |
+| `three versions at different moments` | Three different takes on the same theme |
 | `escalate` | Each version pushes composition and ideas further |
 | An image plus a format | A reverse prompt that keeps the image's composition |
 
@@ -119,7 +119,7 @@ image-prompt-gen/
     ├── camera.md               Shot size, angles, crops, visibility gate
     ├── composition.md          Multiple subjects and story scenes
     ├── erotic-intensity.md     E0 to E5 rules
-    ├── character-looks.md      Archetypes for designed characters
+    ├── character-looks.md      Method for inventing characters
     └── reverse-prompt.md       Image to prompt
 ```
 
@@ -127,7 +127,7 @@ The agent reads only the references a request needs, so simple prompts stay ligh
 
 ## Limitations
 
-- Prompts are written for the listed models. Other models may need their own adapter.
+- Only the listed models are supported. Asking for another model gets a short note instead of a prompt.
 - Reverse prompting is only as accurate as your agent's vision. Left and right, small accessories, and head tilt are the details most often misread, so check them before you generate.
 - Generate at the source image's aspect ratio. A different ratio changes the composition no matter what the prompt says.
 - Style, quality tags, and negative prompts are left to your own workflow.

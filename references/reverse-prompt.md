@@ -57,7 +57,7 @@ The image replaces the user's idea as the requirement, so the rules that let the
 
 ## 5. Output
 
-Follow the output contract in `SKILL.md`: the prompt, or one labeled prompt per model. After the prompts, add one short line in the user's language giving the source aspect ratio and resolution (for example `原圖比例約 3:4 直式（800×1045），生成時用相同比例構圖最一致`), because generating at a different aspect ratio changes the composition no matter what the prompt says. Nothing else unless the user asks to see the reading.
+Follow the output contract in `SKILL.md`: the prompt, or one labeled prompt per model. Nothing else unless the user asks to see the reading.
 
 The SceneSpec from the image stays in the conversation, so later requests such as `same scene, E2`, `same scene, Qwen`, or `make it night` edit it like any other SceneSpec.
 
