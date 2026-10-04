@@ -56,7 +56,9 @@ Prefer relational clauses over isolated labels. The relationship carries more co
 
 **Composition.** State organization when it matters to the request: `The girl forms the largest shape in the foreground while the doorway figure remains smaller and deeper in the room.` `The bed creates a diagonal from the lower foreground toward the open doorway.` When the scene depends on delayed discovery, say so: `She is the brightest and largest subject in the foreground, while the reflected figure stays smaller and darker in the mirror behind her.` When two subjects are equally important, describe their shared relationship instead of forcing one to be secondary.
 
-**Framing** comes from `camera.md`: always a term plus its visible boundary. Raw Qwen also benefits from placing her on screen (`centered in the upper half of the frame`, `her feet near the lower edge`). Framing keeps important relationships in view: `A medium-wide view keeps both figures and the doorway inside the composition.` `A full-figure composition includes both feet and visible floor space beneath them.` Choose framing because of what the viewer needs to understand.
+**Framing** comes from `camera.md`: always a term plus its visible boundary. Raw Qwen responds to explicit placement, so always place her on screen and name what fills the rest, following the layout in `composition.md` section 2 (`she sits in the left third of the frame, the bare wall open across the right two-thirds`, `her feet near the lower edge`). Choose framing because of what the viewer needs to understand: `A medium-wide view keeps both figures and the doorway inside the composition.` Parts the event doesn't need may fall outside the frame.
+
+**The eye's path** is stated as a physical line or light: `The edge of the table runs from the lower right corner toward her hands.` `A band of window light crosses the floor and ends at her feet.`
 
 **Camera position** in visible terms: `The camera stays near eye level, facing her at a slight angle.` `The camera looks down from above, keeping both figures and the disturbed bedding visible as one composition.`
 
@@ -70,7 +72,7 @@ Prefer relational clauses over isolated labels. The relationship carries more co
 
 **Gaze**, when it connects information: `She looks toward the figure in the doorway.` `The two figures look at each other while their bodies stay angled apart.`
 
-**Target states** protect a key requirement: `Both figures remain fully visible inside the composition.` `The open suitcase stays a secondary background detail.` Use them when a real risk exists, not as a fixed suffix.
+**Target states** protect a key requirement: `Both figures' hands stay visible where they touch.` `The open suitcase stays a secondary background detail.` Use them when a real risk exists, not as a fixed suffix.
 
 ## 7. Environment, evidence, and materials
 
@@ -96,21 +98,21 @@ The structure stays the same: `primary event → body relationship → spatial a
 
 **Simple scene.** Input: `girl beside an open window, looking at the rainy street`
 
-A girl sits sideways beside an open window with one knee drawn up, looking down toward the rain-covered street. An eye-level side view framed from the knees up places her on the right side of the frame, with the window and distant street visible behind her. Soft light from the window illuminates her face and hands while the interior stays subdued.
+A girl sits sideways beside an open window with one knee drawn up, looking down toward the rain-covered street. An eye-level side view framed from the knees up places her in the left third of the frame, facing right. The open window fills the right two-thirds, its vertical frame standing just beyond her knee, with the distant wet street visible below the sill in the direction of her gaze. Soft light from the window illuminates her face and hands while the interior behind her stays subdued.
 
 **Narrative scene** (same SceneSpec as the Krea narrative example):
 
-A girl sits on the edge of an unmade bed and turns toward a half-open door, gripping the wrinkled sheet with one hand. A wide shot at eye level shows her full body as the dominant foreground subject on the left side of the frame. The doorway recedes into the background on the right, with an open suitcase beside it and a coat lying on the floor. Soft side light from the window illuminates her face, hand and the nearest folds of the bedding while the doorway stays darker.
+A girl sits on the edge of an unmade bed and turns toward a half-open door, gripping the wrinkled sheet with one hand. A wide shot at eye level places her full body in the left third of the foreground as the dominant subject. The length of the bed runs from her toward the doorway, which recedes into the background on the right, with an open suitcase beside it and a coat lying on the floor. Soft side light from the window illuminates her face, hand and the nearest folds of the bedding while the doorway stays darker.
 
 Compared with Krea, this states the foreground and background, the left and right placement, depth, and the lighting hierarchy explicitly, because no expander will infer them.
 
 **Multiple characters.**
 
-A girl leans backward against the edge of a table while the second figure approaches closely from her left. Their bodies overlap across the foreground and form a single diagonal composition. Her right hand supports her weight against the tabletop while her head turns toward the other figure. A two-shot framed from mid-thigh up at eye level keeps their body interaction and the edge of the table visible. A narrow side light defines their overlapping silhouettes against the darker room.
+A girl leans backward against the edge of a table while the second figure approaches closely from her left. Their bodies overlap across the foreground and form a single diagonal from the lower left corner toward the upper right. Her right hand supports her weight against the tabletop while her head turns toward the other figure. A two-shot framed from mid-thigh up at eye level keeps their body interaction and the edge of the table visible. A narrow side light defines their overlapping silhouettes against the darker room.
 
 **Same scene, model switch.** The designed-look scene from the Krea examples, recompiled with `same scene, Qwen`:
 
-A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill, one knee drawn up and her chin resting on it, the hem of her oversized gray fleece hoodie bunched around her hips. An eye-level three-quarter front view, framed from the waist up, places her in the right half of the frame, with the tall rain-streaked window and the blurred street lights behind her on the left. Her blue eyes follow the street below. Her phone lies face-up and dark on the sill beside her right hand, half hidden under the long hoodie sleeve, within reach but untouched. Over-ear headphones rest silent around her neck. A white mug sits near the far end of the sill, and a low shelf of paperbacks stands against the dim wall behind her. Cool light from the window illuminates her face, hair and fingers, while the room stays dim and soft. Raindrops streak down the glass beside her shoulder.
+A girl with a short platinum-blonde bob sits sideways on a wide wooden windowsill, one knee drawn up and her chin resting on it, the hem of her oversized gray fleece hoodie bunched around her hips. An eye-level three-quarter front view, framed from the waist up, places her in the right third of the frame, facing the tall rain-streaked window that fills the left two-thirds, the wooden sill running from her knee toward the glass. Her blue eyes follow the blurred street lights below. Her phone lies face-up and dark on the sill beside her right hand, half hidden under the long hoodie sleeve, within reach but untouched. Over-ear headphones rest silent around her neck. A white mug sits near the far end of the sill, and a low shelf of paperbacks stands against the dim wall behind her. Cool light from the window illuminates her face, hair and fingers, while the room stays dim and soft. Raindrops streak down the glass beside her shoulder.
 
 The scene and the look are identical. Qwen raw receives more explicit spatial conditioning because no prompt expander fills it in.
 

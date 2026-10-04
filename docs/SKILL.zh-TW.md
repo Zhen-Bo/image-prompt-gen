@@ -50,7 +50,7 @@
 | `SECONDARY` | 支撐、改變或揭示主要事件的資訊 |
 | `RELATIONSHIP` | 主體、物件與表面之間如何連結（接觸、視線、因果、重量） |
 | `MOMENT` | 預備、動作、中斷、反應或事後 |
-| `COMPOSITION` | 層級、景深層次、重疊、可見度，以及視線在畫面中的移動路徑 |
+| `COMPOSITION` | 版面（她在畫面哪裡、留白區域，以及視線在畫面中的移動路徑）、層級、景深層次、重疊與可見度 |
 | `CAMERA` | 景別、鏡頭高度、主體朝向與視角。一定要設定：使用者指定的，或從 `references/camera.md` 選出最合適的 |
 | `LIGHTING` | 一套支撐畫面層級的一致光線邏輯 |
 | `ENVIRONMENT` | 場景與相關物件 |
@@ -151,7 +151,7 @@
 
 ### 用正面方式描述目標狀態
 
-構圖取決於某個特定狀態時，把那個狀態當作目標來描述（`the full figure stays inside the frame with floor visible beneath her feet`、`the second figure stays small and deep in the doorway`）。目標狀態告訴模型要畫什麼。列出不想要的結果，反而大多會帶入那些被提到的概念。只有在某個排除非常必要、又沒有正面寫法時，才簡短地排除。
+構圖取決於某個特定狀態時，把那個狀態當作目標來描述（`she sits small in the lower left while the bare wall stays open across the rest of the frame`、`the second figure stays small and deep in the doorway`）。目標狀態告訴模型要畫什麼。列出不想要的結果，反而大多會帶入那些被提到的概念。只有在某個排除非常必要、又沒有正面寫法時，才簡短地排除。
 
 ### 條件保持一致
 
@@ -166,7 +166,7 @@
 這些規則適用於所有轉接器。模型專屬的密度寫在各轉接器參考檔中。
 
 - **自然語句，不是 tag。** 適用於 Krea 和 Qwen。Anima 使用 tag 區塊加上一段敘述，見 `references/anima.md`。語法承載了關係。`A girl sits on the edge of the bed, looking toward the open door while one hand grips the wrinkled sheet` 比 `girl, bed, door, sheet, looking` 傳達的多得多。
-- **主要事件優先。** 預設語意順序：主要主體 → 動作或狀態 → 互動 → 構圖 → 鏡頭與取景 → 光線 → 環境 → 敘事或材質痕跡。其他順序讀起來更清楚時可以調整。
+- **主要事件優先。** 預設語意順序：主要主體 → 動作或狀態 → 互動 → 構圖 → 鏡頭與取景 → 光線 → 環境 → 敘事或材質痕跡。其他順序讀起來更清楚時可以調整。當版面是畫面的關鍵時，把她的位置寫進第一句（`A girl sits small in the lower right corner of the frame...`），不要讓它埋在外型描述後面。
 - **用詞反映層級。** 主要主體用最強、最早的語言。次要細節用較安靜的措辭（`remain quieter details deeper in the room`），而不是同等份量的清單。
 - **把造型沿著觀者的視線分散。** 在提示詞中的位置本身就是隱性權重，所以在開頭貼一整塊特徵，等於告訴模型它們一樣重要。先用一到兩個錨點特徵介紹女孩（通常是髮色與輪廓），其餘特徵放在該出現的地方：眼睛與表情跟著她的視線，頭髮擺動跟著姿勢，布料跟著它覆蓋或一起移動的身體部位，配件跟著它所在的手或位置。畫面看得到的每個造型特徵出現一次，分散只是改變每個特徵放的位置。被鏡頭切掉的特徵留在 SceneSpec 裡，不寫進提示詞，因為描述它們會把鏡頭拉遠來容納它們（見 `camera.md` 第 11 節）。
 - **小細節要有位置。** 沒有位置的細節會漂移。`a bandage` 可能跑到任何肢體或臉上，而 `a small bandage across the bridge of her nose` 會落在預期的地方。寫出每個小細節的位置：頭髮的哪一側、哪根手指、臉頰或領口的哪個部位。
@@ -187,7 +187,7 @@
 |---|---|
 | 目標模型的檔案：`references/krea.md`、`references/qwen.md` 或 `references/anima.md` | 密度、提示詞形式與範例。Anima 檔案另外包含 tag 規則、鏡頭 tag 與權重 |
 | `references/camera.md` | 景別、角度、視角、裁切，以及使用者沒指定時如何選鏡頭 |
-| `references/composition.md` | 層次、時間點、景深、環境作為證據，以及修補薄弱的構圖 |
+| `references/composition.md` | 版面與視線路徑、層次、時間點、景深、環境作為證據，以及修補薄弱的構圖 |
 | `references/character-looks.md` | 如何發想女孩的造型，以及如何描述任何服裝 |
 
 反推時跳過 `composition.md` 和 `character-looks.md`，因為構圖和造型已經由圖片決定。
@@ -281,6 +281,7 @@ Anima:
 
 - 使用者要求的內容都在，而且畫面呈現的是事件，不是物件清單。你選的鏡頭裁掉了使用者指定的東西時，改換鏡頭。
 - 主要主體最先被看到。次要資訊以較低的份量支撐或重新詮釋它。
+- 版面有寫清楚：她在畫面哪裡、佔多大，哪一塊保持空白，什麼把視線帶到她身上。她的視線前方有空間，或有一個放在畫面裡的目標。主角置中時要有理由。
 - 位置、接觸與重量在物理上合理。多個角色讀起來是同一個互動。
 - 女性主體使用 `girl`，沒有年齡用詞，也沒有加入未要求的畫風用語。
 - 條件一致（一套光線邏輯、一個視角）。

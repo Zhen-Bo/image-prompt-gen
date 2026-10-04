@@ -54,7 +54,7 @@ Every request is reduced to a single SceneSpec. All passes (composition, erotic 
 | `SECONDARY` | Information that supports, changes, or reveals the primary event |
 | `RELATIONSHIP` | How subjects, objects, and surfaces connect (contact, gaze, cause, weight) |
 | `MOMENT` | Anticipation, action, interruption, reaction, or aftermath |
-| `COMPOSITION` | Hierarchy, depth layers, overlap, visibility, and the eye's path through the frame |
+| `COMPOSITION` | Layout (where she sits, the open area, and the eye's path through the frame), hierarchy, depth layers, overlap, and visibility |
 | `CAMERA` | Shot size, camera height, subject orientation, and viewpoint. Always set: the user's choice, or the best match from `references/camera.md` |
 | `LIGHTING` | One coherent light logic that supports the hierarchy |
 | `ENVIRONMENT` | Setting and relevant objects |
@@ -155,7 +155,7 @@ Stacked praise adjectives (`beautiful, gorgeous, stunning`) carry less informati
 
 ### State target states positively
 
-When the composition depends on a particular state, describe that state as the goal (`the full figure stays inside the frame with floor visible beneath her feet`, `the second figure stays small and deep in the doorway`). A goal state tells the model what to draw. A list of unwanted outcomes mostly introduces the very concepts it names. Use a brief exclusion only when one specific exclusion is essential and has no positive form.
+When the composition depends on a particular state, describe that state as the goal (`she sits small in the lower left while the bare wall stays open across the rest of the frame`, `the second figure stays small and deep in the doorway`). A goal state tells the model what to draw. A list of unwanted outcomes mostly introduces the very concepts it names. Use a brief exclusion only when one specific exclusion is essential and has no positive form.
 
 ### Keep constraints coherent
 
@@ -170,7 +170,7 @@ When the scene contains readable text (a sign, a note, a screen), quote the exac
 These apply to both adapters. Model-specific density lives in the adapter reference.
 
 - **Natural prose, not tags.** This applies to Krea and Qwen. Anima uses a tag block followed by prose, as described in `references/anima.md`. Grammar carries relationships. `A girl sits on the edge of the bed, looking toward the open door while one hand grips the wrinkled sheet` says far more than `girl, bed, door, sheet, looking`.
-- **Dominant event first.** Default semantic order: primary subject → action or state → interaction → composition → camera/framing → lighting → environment → narrative or material evidence. Reorder when another order reads more clearly.
+- **Dominant event first.** Default semantic order: primary subject → action or state → interaction → composition → camera/framing → lighting → environment → narrative or material evidence. Reorder when another order reads more clearly. When the layout carries the image, bring her placement into the opening sentence (`A girl sits small in the lower right corner of the frame...`) so it isn't buried behind her appearance.
 - **Wording mirrors hierarchy.** The primary subject gets the strongest, earliest language. Secondary details get quieter phrasing (`remain quieter details deeper in the room`) rather than equal-weight inventory.
 - **Spread the look along the viewer's path.** Position in the prompt acts as implicit weight, so a block of features pasted at the start tells the model they all matter equally. Introduce the girl with one or two anchor features (usually hair color and silhouette), then attach the rest where they belong: eyes and expression with her gaze, hair movement with her pose, fabric with the body part it covers or moves with, and accessories with the hand or spot they sit on. Every feature the frame shows appears once. Spreading them out only changes where each one goes. Features the camera crops out stay in the SceneSpec rather than in the prompt, because describing them pulls the frame out to include them (see `camera.md` section 11).
 - **Give small details a location.** A detail without a position drifts. `a bandage` might end up on any limb or on her face, while `a small bandage across the bridge of her nose` lands where it was meant to go. Name where each small detail sits: which side of her hair, which finger, which part of the cheek or collar.
@@ -191,7 +191,7 @@ Before writing any prompt, read the references in two steps. Each file has a con
 |---|---|
 | The target model's file: `references/krea.md`, `references/qwen.md`, or `references/anima.md` | Density, prompt shape, and examples. The Anima file also covers tag rules, camera tags, and weighting |
 | `references/camera.md` | Shot size, angle, viewpoint, crops, and choosing a camera when the user doesn't |
-| `references/composition.md` | Hierarchy, moments, depth, environment as evidence, and repairing a weak composition |
+| `references/composition.md` | Layout and the eye's path, hierarchy, moments, depth, environment as evidence, and repairing a weak composition |
 | `references/character-looks.md` | How to invent the girl's look, and how to describe any outfit |
 
 For reverse prompting, skip `composition.md` and `character-looks.md`, because the image already decides the composition and the look.
@@ -285,6 +285,7 @@ Before returning, silently confirm:
 
 - The user's required content is present, and the image shows an event rather than an inventory. When a camera you chose crops out something the user specified, change the camera.
 - The primary subject reads first. Secondary information supports or reinterprets it at lower emphasis.
+- The layout is stated: where she sits and how much of the frame she takes, which area stays open, and what leads the eye to her. Her gaze has room or a target placed in the frame. A centered subject has a reason.
 - Positions, contact, and weight are physically coherent. Multiple characters read as one interaction.
 - Female subjects use `girl`, no age terms appear, and no unrequested style terms were added.
 - Constraints are coherent (one light logic, one viewpoint).
