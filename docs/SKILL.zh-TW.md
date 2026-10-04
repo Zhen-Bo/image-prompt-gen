@@ -173,7 +173,7 @@
 - **把造型沿著觀者的視線分散。** 在提示詞中的位置本身就是隱性權重，所以在開頭貼一整塊特徵，等於告訴模型它們一樣重要。先用一到兩個錨點特徵介紹女孩（通常是髮色與輪廓），其餘特徵放在該出現的地方：眼睛與表情跟著她的視線，頭髮擺動跟著姿勢，布料跟著它覆蓋或一起移動的身體部位，配件跟著它所在的手或位置。每個造型特徵仍然出現一次，分散只是改變每個特徵放的位置。
 - **小細節要有位置。** 沒有位置的細節會漂移。`a bandage` 可能跑到任何肢體或臉上，而 `a small bandage across the bridge of her nose` 會落在預期的地方。寫出每個小細節的位置（左側髮髻上的髮夾、落在鎖骨上的墜飾、下臉頰的淚痕）。
 - **服裝要有材質。** 寫出每件衣物的材質或質地（`a loose cream knit cardigan`、`a glossy black satin slip dress`、`a cotton yukata with printed morning glories`）。材質告訴模型布料怎麼摺、怎麼反光、怎麼對光線反應。其他物件的材質在重要時用行為描述：亞麻 → `irregular woven fibers, matte surface, soft creases`，濕潤皮膚 → `small reflective highlights following the curvature`。
-- **環境裡要有實體。** 場景有地點時，至少用三個具體物件或結構撐起空間，依 `references/composition.md` 挑選有故事價值的物件（`a rain-streaked window, a low shelf of paperbacks, a mug going cold on the sill`）。只寫 `in a bedroom` 這樣的地點名稱，空間就交給運氣。例外是使用者要求素色背景、極簡場景或透明背景。
+- **環境裡要有實體。** 場景有地點時，至少用三個具體物件或結構撐起空間，依 `references/composition.md` 挑選有故事價值的物件（`a rain-streaked window, a low shelf of paperbacks, a mug going cold on the sill`）。只寫 `in a bedroom` 這樣的地點名稱，空間就交給運氣。例外有兩種：使用者要求素色背景、極簡場景或透明背景，以及特寫這類緊的鏡頭。緊的鏡頭只寫她周圍實際看得到的背景，依照 `references/camera.md` 的可見性檢查。
 - **鏡頭用可見的方式寫。** 每個提示詞都要交代鏡頭：使用者指定的，或透過 `references/camera.md` 選出最合適的。每個術語都附上畫面實際包含什麼（`cowboy shot, framed from mid-thigh up`）。焦距、光圈、ISO、鏡頭類型與 `bokeh` 等真實相機術語永遠不出現，即使使用者要求也一樣，而是轉譯成可見的取景與模糊。
 - **E 等級留在內部。** 提示詞中永遠不會出現 `E0` 到 `E5`，只會出現該等級代表的可見場景資訊。
 - **最後才壓縮。** 刪掉重複的同義詞、重述的動作、裝飾性形容詞，以及其他詞組已經隱含的細節。要保護的是：誰在動作、誰在反應、什麼碰到什麼、相對位置、層級，以及承載故事的痕跡。
